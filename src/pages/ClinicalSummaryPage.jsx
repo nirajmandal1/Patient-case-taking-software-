@@ -123,15 +123,15 @@ export const ClinicalSummaryPage = () => {
   return (
     <div className="max-w-5xl mx-auto py-6 px-4 space-y-6 animate-fade-in">
       {/* Top Action Header */}
-      <div className="glass-card bg-gradient-to-r from-blue-700 via-blue-800 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-wrap justify-between items-center gap-5 border border-white/10 relative overflow-hidden">
+      <div className="bg-gradient-to-r from-blue-700 via-blue-800 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-wrap justify-between items-center gap-5 border border-blue-600/30 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="relative z-10 space-y-1.5">
           <div className="flex items-center gap-2.5">
-            <span className="bg-white/15 backdrop-blur-md text-blue-200 text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider border border-white/20">
+            <span className="bg-white/20 backdrop-blur-md text-blue-100 text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider border border-white/30">
               CLINICAL INTAKE CASE SHEET
             </span>
-            <span className="text-xs bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-3 py-0.5 rounded-full font-mono font-bold flex items-center gap-1">
+            <span className="text-xs bg-emerald-500/25 text-emerald-300 border border-emerald-400/40 px-3 py-0.5 rounded-full font-mono font-bold flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
               Token #{patientData.token || "105"}
             </span>
@@ -153,7 +153,7 @@ export const ClinicalSummaryPage = () => {
               setEditGender(patientData.gender || "Male");
               setIsEditingPatient(true);
             }}
-            className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer backdrop-blur-md shadow-sm"
+            className="bg-white/15 hover:bg-white/25 text-white border border-white/30 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer backdrop-blur-md shadow-sm active:scale-95"
           >
             <Edit size={14} className="text-blue-300" /> ✏️ Edit Name & Age
           </button>
@@ -164,7 +164,7 @@ export const ClinicalSummaryPage = () => {
               setMedsList(Array.isArray(patientData?.caseData?.currentMeds) ? patientData.caseData.currentMeds : []);
               setIsEditingMeds(true);
             }}
-            className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer backdrop-blur-md shadow-sm"
+            className="bg-white/15 hover:bg-white/25 text-white border border-white/30 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer backdrop-blur-md shadow-sm active:scale-95"
           >
             <Edit size={14} className="text-emerald-300" /> ✏️ Edit Meds (दवाइयाँ)
           </button>
@@ -172,24 +172,24 @@ export const ClinicalSummaryPage = () => {
           {/* Open PDF in New Tab */}
           <button
             onClick={handleOpenPDF}
-            className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer backdrop-blur-md shadow-sm"
+            className="bg-white text-blue-900 hover:bg-blue-50 border border-white px-4 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer shadow-md active:scale-95"
             title="Open generated PDF in new tab"
           >
-            <ExternalLink size={15} className="text-blue-300" /> Open PDF (खोलें ↗)
+            <ExternalLink size={15} className="text-blue-700" /> Open PDF (खोलें ↗)
           </button>
 
           {/* Download PDF button */}
           <button
             onClick={handleDownloadPDF}
-            className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer backdrop-blur-md shadow-sm"
+            className="bg-blue-600 hover:bg-blue-500 text-white border border-blue-400/50 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer shadow-md active:scale-95"
           >
-            <Download size={15} className="text-blue-300" /> Download PDF
+            <Download size={15} className="text-blue-200" /> Download PDF
           </button>
 
           {/* Print button */}
           <button
             onClick={() => window.print()}
-            className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer backdrop-blur-md shadow-sm"
+            className="bg-white/15 hover:bg-white/25 text-white border border-white/30 px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer backdrop-blur-md shadow-sm active:scale-95"
           >
             <Printer size={15} className="text-blue-300" /> Print
           </button>
@@ -198,7 +198,7 @@ export const ClinicalSummaryPage = () => {
           <button
             onClick={handleSubmitToDoctor}
             disabled={isSubmitting}
-            className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-black px-6 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-emerald-900/30 transition transform active:scale-95 cursor-pointer disabled:opacity-50"
+            className="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-black px-6 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-emerald-950/40 transition transform active:scale-95 cursor-pointer disabled:opacity-50"
           >
             <Send size={15} />
             <span>{isSubmitting ? "Sending..." : "Send to Doctor (डॉक्टर को भेजें)"}</span>
