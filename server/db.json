@@ -1,0 +1,896 @@
+{
+  "patients": [
+    {
+      "token": "112",
+      "patientId": "P-8801",
+      "name": "Niraj Kumar Mandal",
+      "age": 21,
+      "gender": "Male",
+      "abhaId": "91-1123-8822-7711",
+      "language": "Hindi",
+      "chiefComplaint": "पेट में तेज दर्द है",
+      "historyStatus": "Complete (AI Verified)",
+      "documentsCount": 3,
+      "priority": "High Priority",
+      "triageReason": "Acute Chest Pain / Radiation detected by AI Interview",
+      "intakeTime": "10:14 AM",
+      "duration": "4 mins",
+      "caseData": {
+        "hpi": "Patient reported: \"पेट में तेज दर्द है\". Duration/Onset: Upar pet mein dard. Location/Characteristics: Khane ke baad badhta hai. AI clinical triage conducted in Hindi.",
+        "pastHistory": "Essential Hypertension (Stage 1), No known diabetes",
+        "currentMeds": [
+          "Tab. Amlodipine 5mg OD",
+          "Tab. Paracetamol 650mg SOS"
+        ],
+        "allergies": [
+          "NKDA (No Known Drug Allergies)"
+        ],
+        "familyHistory": "Father died of sudden cardiac arrest at age 54.",
+        "lifestyle": "Non-smoker, mild alcohol consumption occasionally.",
+        "reviewOfSystems": {
+          "cardiovascular": "Chest pain, palpitations (+)",
+          "respiratory": "Mild breathlessness on exertion (+)",
+          "gastrointestinal": "No nausea or vomiting (-)",
+          "neurological": "No dizziness, no syncope (-)"
+        },
+        "extractedReports": [
+          {
+            "id": "REP-01",
+            "date": "15 Jan 2026",
+            "type": "ECG Report",
+            "test": "Sinus Rhythm, Mild ST elevation in II, III, aVF",
+            "source": "District OPD OCR Scan",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-02",
+            "date": "02 Oct 2025",
+            "type": "Blood Investigation",
+            "test": "Hb: 14.2 g/dL, BP: 154/96 mmHg, HbA1c: 5.9%",
+            "source": "City Diagnostics",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-03",
+            "date": "10 Jun 2025",
+            "type": "Prescription",
+            "test": "Amlodipine 5mg + Telmisartan 40mg prescribed",
+            "source": "Government Hospital",
+            "status": "Verified"
+          }
+        ]
+      },
+      "conversation": [
+        {
+          "sender": "ai",
+          "text": "नमस्ते Niraj जी! आज आपको क्या तकलीफ है? कृपया अपनी परेशानी बताइए।",
+          "time": "09:38 am"
+        },
+        {
+          "sender": "patient",
+          "text": "पेट में तेज दर्द है",
+          "time": "09:38 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Aapki yeh takleef jaldi theek ho jayegi, chinta mat kariye, bas kuch baatein bataiye taaki doctor ko pata chal sake. Pet ka dard kahan par ho raha hai aur kya iske sath ulti (vomiting) ya dast (loose motions) bhi hain?",
+          "time": "09:38 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Upar pet mein dard",
+          "time": "09:38 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Kya yeh dard khana khane ke baad aur badh jaata hai, ya pet mein jalan aur gas jaisi feel ho rahi hai?",
+          "time": "09:38 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Khane ke baad badhta hai",
+          "time": "09:38 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Yeh dard khane ke baad badhta hai, iske baare mein doctor ko aaram se bata denge, chinta mat kariye. Kya is dard ke sath aapko muh mein khatta paani aana ya ulti jaisa mehsus ho raha hai?\n\n[Kya is dard ke sath aapko muh mein khatta paani aana ya ulti jaisa mehsus ho raha hai?]",
+          "time": "09:38 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Khatta paani aa raha hai",
+          "time": "09:38 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Aapki yeh takleef acidity ya gas ki lag rahi hai, doctor iska achhe se ilaj kar denge. Kya aapko iske sath seene (chest) mein jalan ya bhari-pan bhi mehsoos ho raha hai?\n\n[Kya aapko iske sath seene (chest) mein jalan ya bhari-pan bhi mehsoos ho raha hai?]",
+          "time": "09:38 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Haan, seene mein jalan hai",
+          "time": "09:39 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Seene mein jalan hona ek aam symptom hai, chinta mat kariye, doctor isko theek kar denge. Kya aapko saans lene mein takleef ya chakkar aane jaisa bhi lag raha hai?\n\n[Kya aapko saans lene mein takleef ya chakkar aane jaisa bhi lag raha hai?]",
+          "time": "09:39 am",
+          "streaming": false
+        }
+      ],
+      "createdAt": "2026-09-12T04:09:29.721Z",
+      "status": "waiting",
+      "doctorNotes": "Consultation completed. Rx provided.",
+      "completedAt": "2026-09-11T18:47:22.319Z"
+    },
+    {
+      "token": "111",
+      "patientId": "P-8801",
+      "name": "Rahul Verma",
+      "age": 29,
+      "gender": "Male",
+      "abhaId": "91-1123-8822-7711",
+      "language": "Hindi",
+      "chiefComplaint": "Chest discomfort with restlessness",
+      "historyStatus": "Complete (AI Verified)",
+      "documentsCount": 3,
+      "priority": "Normal",
+      "triageReason": "Standard OPD Intake",
+      "intakeTime": "10:14 AM",
+      "duration": "4 mins",
+      "caseData": {
+        "hpi": "Patient reported: \"Chest discomfort with restlessness\". Duration/Onset: Last 2 days. Location/Characteristics: Left-sided radiation. AI clinical triage conducted in Hindi.",
+        "pastHistory": "Essential Hypertension (Stage 1), No known diabetes",
+        "currentMeds": [
+          "Tab. Amlodipine 5mg OD",
+          "Tab. Paracetamol 650mg SOS"
+        ],
+        "allergies": [
+          "NKDA (No Known Drug Allergies)"
+        ],
+        "familyHistory": "Father died of sudden cardiac arrest at age 54.",
+        "lifestyle": "Non-smoker, mild alcohol consumption occasionally.",
+        "reviewOfSystems": {
+          "cardiovascular": "Chest pain, palpitations (+)",
+          "respiratory": "Mild breathlessness on exertion (+)",
+          "gastrointestinal": "No nausea or vomiting (-)",
+          "neurological": "No dizziness, no syncope (-)"
+        },
+        "extractedReports": [
+          {
+            "id": "REP-01",
+            "date": "15 Jan 2026",
+            "type": "ECG Report",
+            "test": "Sinus Rhythm, Mild ST elevation in II, III, aVF",
+            "source": "District OPD OCR Scan",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-02",
+            "date": "02 Oct 2025",
+            "type": "Blood Investigation",
+            "test": "Hb: 14.2 g/dL, BP: 154/96 mmHg, HbA1c: 5.9%",
+            "source": "City Diagnostics",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-03",
+            "date": "10 Jun 2025",
+            "type": "Prescription",
+            "test": "Amlodipine 5mg + Telmisartan 40mg prescribed",
+            "source": "Government Hospital",
+            "status": "Verified"
+          }
+        ]
+      },
+      "conversation": [
+        {
+          "sender": "ai",
+          "text": "नमस्ते Rahul जी! आज आपको क्या तकलीफ है? कृपया अपनी परेशानी बताइए।",
+          "time": "02:27 am"
+        }
+      ],
+      "createdAt": "2026-09-11T20:57:40.326Z",
+      "status": "completed",
+      "doctorNotes": "Consultation completed. Rx provided.",
+      "completedAt": "2026-09-11T21:00:43.664Z"
+    },
+    {
+      "token": "110",
+      "patientId": "P-8801",
+      "name": "Rahul Verma",
+      "age": 29,
+      "gender": "Male",
+      "abhaId": "91-1123-8822-7711",
+      "language": "Hindi",
+      "chiefComplaint": "बस, सर, मैं दर्द हो रहा है।",
+      "historyStatus": "Complete (AI Verified)",
+      "documentsCount": 3,
+      "priority": "Normal",
+      "triageReason": "Standard OPD Intake",
+      "intakeTime": "10:14 AM",
+      "duration": "4 mins",
+      "caseData": {
+        "hpi": "Patient reported: \"बस, सर, मैं दर्द हो रहा है।\". Duration/Onset: haa bahut jada . Location/Characteristics: sir me . AI clinical triage conducted in Hindi.",
+        "pastHistory": "Essential Hypertension (Stage 1), No known diabetes",
+        "currentMeds": [
+          "Tab. Amlodipine 5mg OD",
+          "Tab. Paracetamol 650mg SOS"
+        ],
+        "allergies": [
+          "NKDA (No Known Drug Allergies)"
+        ],
+        "familyHistory": "Father died of sudden cardiac arrest at age 54.",
+        "lifestyle": "Non-smoker, mild alcohol consumption occasionally.",
+        "reviewOfSystems": {
+          "cardiovascular": "Chest pain, palpitations (+)",
+          "respiratory": "Mild breathlessness on exertion (+)",
+          "gastrointestinal": "No nausea or vomiting (-)",
+          "neurological": "No dizziness, no syncope (-)"
+        },
+        "extractedReports": [
+          {
+            "id": "REP-01",
+            "date": "15 Jan 2026",
+            "type": "ECG Report",
+            "test": "Sinus Rhythm, Mild ST elevation in II, III, aVF",
+            "source": "District OPD OCR Scan",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-02",
+            "date": "02 Oct 2025",
+            "type": "Blood Investigation",
+            "test": "Hb: 14.2 g/dL, BP: 154/96 mmHg, HbA1c: 5.9%",
+            "source": "City Diagnostics",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-03",
+            "date": "10 Jun 2025",
+            "type": "Prescription",
+            "test": "Amlodipine 5mg + Telmisartan 40mg prescribed",
+            "source": "Government Hospital",
+            "status": "Verified"
+          }
+        ]
+      },
+      "conversation": [
+        {
+          "sender": "ai",
+          "text": "नमस्ते Rahul जी! आज आपको क्या तकलीफ है? कृपया अपनी परेशानी बताइए।",
+          "time": "02:10 am"
+        },
+        {
+          "sender": "patient",
+          "text": "बस, सर, मैं दर्द हो रहा है।",
+          "time": "02:10 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Rahul ji, ye dard shareer ke kis hisse mein ho raha hai - sir mein, pet mein, ya kisi aur jagah par?\n\n[Rahul ji, ye dard shareer ke kis hisse mein ho raha hai?]",
+          "time": "02:10 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "haa bahut jada ",
+          "time": "02:10 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Rahul ji, dard bohot zyada hai, koi baat nahi, doctor jaldi hi aapko dekh lenge. Lekin ye bataiye ki ye dard exact kis jagah ho raha hai?\n\n[Ye dard exact kis jagah (pet, sir, ya chest) ho raha hai?]",
+          "time": "02:10 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "sir me ",
+          "time": "02:11 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Rahul ji, sir dard se pareshan hone ki zaroorat nahi hai, doctor iska ilaaj kar denge. Ye bataiye ki ye dard sir ke kis hisse mein hai aur kya iske sath chakkar ya ulti jaisa lag raha hai?\n\n[Ye dard sir ke kis hisse mein hai aur kya iske sath ulti jaisa lag raha hai?]",
+          "time": "02:11 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "aake ke hisse me ",
+          "time": "02:11 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Rahul ji, aage ke hisse mein dard ho raha hai toh hum jaldi hi doctor ko dikha denge, chinta mat kijiye. Kya is dard ke sath aapko aakhein kholne mein takleef ya roshni se pareshani ho rahi hai?\n\n[Kya is dard ke sath aakhein kholne mein takleef ya roshni se pareshani ho rahi hai?]",
+          "time": "02:11 am",
+          "streaming": false
+        }
+      ],
+      "createdAt": "2026-09-11T20:41:46.939Z",
+      "status": "waiting",
+      "doctorNotes": "Consultation completed. Rx provided.",
+      "completedAt": "2026-09-11T18:47:22.319Z"
+    },
+    {
+      "token": "109",
+      "patientId": "P-8801",
+      "name": "Ramesh Sharma",
+      "age": 48,
+      "gender": "Male",
+      "abhaId": "91-8842-1092-4402",
+      "language": "Hindi",
+      "chiefComplaint": "Chest discomfort with restlessness",
+      "historyStatus": "Complete (AI Verified)",
+      "documentsCount": 3,
+      "priority": "Normal",
+      "triageReason": "Standard OPD Intake",
+      "intakeTime": "10:14 AM",
+      "duration": "4 mins",
+      "caseData": {
+        "hpi": "Patient reported: \"Chest discomfort with restlessness\". Duration/Onset: Last 2 days. Location/Characteristics: Left-sided radiation. AI clinical triage conducted in English.",
+        "pastHistory": "Essential Hypertension (Stage 1), No known diabetes",
+        "currentMeds": [
+          "Tab. Amlodipine 5mg OD",
+          "Tab. Paracetamol 650mg SOS"
+        ],
+        "allergies": [
+          "NKDA (No Known Drug Allergies)"
+        ],
+        "familyHistory": "Father died of sudden cardiac arrest at age 54.",
+        "lifestyle": "Non-smoker, mild alcohol consumption occasionally.",
+        "reviewOfSystems": {
+          "cardiovascular": "Chest pain, palpitations (+)",
+          "respiratory": "Mild breathlessness on exertion (+)",
+          "gastrointestinal": "No nausea or vomiting (-)",
+          "neurological": "No dizziness, no syncope (-)"
+        },
+        "extractedReports": [
+          {
+            "id": "REP-01",
+            "date": "15 Jan 2026",
+            "type": "ECG Report",
+            "test": "Sinus Rhythm, Mild ST elevation in II, III, aVF",
+            "source": "District OPD OCR Scan",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-02",
+            "date": "02 Oct 2025",
+            "type": "Blood Investigation",
+            "test": "Hb: 14.2 g/dL, BP: 154/96 mmHg, HbA1c: 5.9%",
+            "source": "City Diagnostics",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-03",
+            "date": "10 Jun 2025",
+            "type": "Prescription",
+            "test": "Amlodipine 5mg + Telmisartan 40mg prescribed",
+            "source": "Government Hospital",
+            "status": "Verified"
+          }
+        ]
+      },
+      "conversation": [
+        {
+          "sender": "ai",
+          "text": "नमस्ते! आज आपको क्या तकलीफ़ है?\nकृपया बताइए।",
+          "time": "01:26 am"
+        }
+      ],
+      "createdAt": "2026-09-11T19:56:42.656Z",
+      "status": "waiting",
+      "doctorNotes": "Consultation completed. Rx provided.",
+      "completedAt": "2026-09-11T18:47:22.319Z"
+    },
+    {
+      "token": "108",
+      "patientId": "P-8801",
+      "name": "Ramesh Sharma",
+      "age": 48,
+      "gender": "Male",
+      "abhaId": "91-8842-1092-4402",
+      "language": "Hindi",
+      "chiefComplaint": "mera ek dost ke gaand mai dard hai",
+      "historyStatus": "Complete (AI Verified)",
+      "documentsCount": 3,
+      "priority": "Normal",
+      "triageReason": "Standard OPD Intake",
+      "intakeTime": "10:14 AM",
+      "duration": "4 mins",
+      "caseData": {
+        "hpi": "Patient reported: \"mera ek dost ke gaand mai dard hai\". Duration/Onset: srif gaand mai. Location/Characteristics: nhi srif gaand mai dard hai. AI clinical triage conducted in Hindi.",
+        "pastHistory": "Essential Hypertension (Stage 1), No known diabetes",
+        "currentMeds": [
+          "Tab. Amlodipine 5mg OD",
+          "Tab. Paracetamol 650mg SOS",
+          "Tab. Amlodipine 5 mg",
+          "Tab. Paracetamol 650 mg",
+          "Tab. Telmisartan 40 mg"
+        ],
+        "allergies": [
+          "NKDA (No Known Drug Allergies)"
+        ],
+        "familyHistory": "Father died of sudden cardiac arrest at age 54.",
+        "lifestyle": "Non-smoker, mild alcohol consumption occasionally.",
+        "reviewOfSystems": {
+          "cardiovascular": "Chest pain, palpitations (+)",
+          "respiratory": "Mild breathlessness on exertion (+)",
+          "gastrointestinal": "No nausea or vomiting (-)",
+          "neurological": "No dizziness, no syncope (-)"
+        },
+        "extractedReports": [
+          {
+            "id": "REP-01",
+            "date": "15 Jan 2026",
+            "type": "ECG Report",
+            "test": "Sinus Rhythm, Mild ST elevation in II, III, aVF",
+            "source": "District OPD OCR Scan",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-02",
+            "date": "02 Oct 2025",
+            "type": "Blood Investigation",
+            "test": "Hb: 14.2 g/dL, BP: 154/96 mmHg, HbA1c: 5.9%",
+            "source": "City Diagnostics",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-03",
+            "date": "10 Jun 2025",
+            "type": "Prescription",
+            "test": "Amlodipine 5mg + Telmisartan 40mg prescribed",
+            "source": "Government Hospital",
+            "status": "Verified"
+          }
+        ]
+      },
+      "conversation": [
+        {
+          "sender": "ai",
+          "text": "नमस्ते! आज आपको क्या तकलीफ़ है?\nकृपया बताइए।",
+          "time": "12:25 am"
+        },
+        {
+          "sender": "patient",
+          "text": "mera ek dost ke gaand mai dard hai",
+          "time": "12:25 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Dard kaisa mehsoos ho raha hai? Kya yeh baayein haath ya peeth mein ja raha hai?",
+          "time": "12:25 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "srif gaand mai",
+          "time": "12:26 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Bukhar ke saath sardi, thand ya ulti jaisa lag raha hai?",
+          "time": "12:26 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "nhi srif gaand mai dard hai",
+          "time": "12:26 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Kya aapko pehle se BP, Diabetes ya Thyroid ki bimari hai?",
+          "time": "12:26 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Koi bimari nahi",
+          "time": "12:26 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Kya aap abhi koi regular dawai kha rahe hain?",
+          "time": "12:26 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Koi dawai nahi",
+          "time": "12:26 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Kya kisi dawai ya injection se koi allergy hai?",
+          "time": "12:26 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Pata nahi",
+          "time": "12:26 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Ghar mein kisi ko pehle heart attack ya sugar ki history hai?",
+          "time": "12:26 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Pata nahi",
+          "time": "12:26 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Shukriya! Aapka case note ho gaya hai. Ab aap purani reports scan kar sakte hain.",
+          "time": "12:26 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Doctor Summary Dekhein",
+          "time": "12:26 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Shukriya! Aapka case note ho gaya hai. Ab aap purani reports scan kar sakte hain.",
+          "time": "12:26 am",
+          "streaming": false
+        }
+      ],
+      "createdAt": "2026-09-11T18:57:23.181Z",
+      "status": "waiting",
+      "doctorNotes": "Consultation completed. Rx provided.",
+      "completedAt": "2026-09-11T18:47:22.319Z",
+      "updatedAt": "2026-09-11T19:43:23.652Z"
+    },
+    {
+      "token": "107",
+      "patientId": "P-8801",
+      "name": "Ramesh Sharma",
+      "age": 48,
+      "gender": "Male",
+      "abhaId": "91-8842-1092-4402",
+      "language": "Hindi",
+      "chiefComplaint": "Mera PED dard de raha hai.",
+      "historyStatus": "Complete (AI Verified)",
+      "documentsCount": 3,
+      "priority": "Normal",
+      "triageReason": "Standard OPD Intake",
+      "intakeTime": "10:14 AM",
+      "duration": "4 mins",
+      "caseData": {
+        "hpi": "Patient reported: \"Mera PED dard de raha hai.\". Duration/Onset: Peeth mein. Location/Characteristics: Thand lag rahi hai. AI clinical triage conducted in English.",
+        "pastHistory": "Essential Hypertension (Stage 1), No known diabetes",
+        "currentMeds": [
+          "Tab. Amlodipine 5mg OD",
+          "Tab. Paracetamol 650mg SOS"
+        ],
+        "allergies": [
+          "NKDA (No Known Drug Allergies)"
+        ],
+        "familyHistory": "Father died of sudden cardiac arrest at age 54.",
+        "lifestyle": "Non-smoker, mild alcohol consumption occasionally.",
+        "reviewOfSystems": {
+          "cardiovascular": "Chest pain, palpitations (+)",
+          "respiratory": "Mild breathlessness on exertion (+)",
+          "gastrointestinal": "No nausea or vomiting (-)",
+          "neurological": "No dizziness, no syncope (-)"
+        },
+        "extractedReports": [
+          {
+            "id": "REP-01",
+            "date": "15 Jan 2026",
+            "type": "ECG Report",
+            "test": "Sinus Rhythm, Mild ST elevation in II, III, aVF",
+            "source": "District OPD OCR Scan",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-02",
+            "date": "02 Oct 2025",
+            "type": "Blood Investigation",
+            "test": "Hb: 14.2 g/dL, BP: 154/96 mmHg, HbA1c: 5.9%",
+            "source": "City Diagnostics",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-03",
+            "date": "10 Jun 2025",
+            "type": "Prescription",
+            "test": "Amlodipine 5mg + Telmisartan 40mg prescribed",
+            "source": "Government Hospital",
+            "status": "Verified"
+          }
+        ]
+      },
+      "conversation": [
+        {
+          "sender": "ai",
+          "text": "नमस्ते! आज आपको क्या तकलीफ़ है?\nकृपया बताइए।",
+          "time": "12:18 am"
+        },
+        {
+          "sender": "patient",
+          "text": "Mera PED dard de raha hai.",
+          "time": "12:19 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Dard kaisa mehsoos ho raha hai? Kya yeh baayein haath ya peeth mein ja raha hai?",
+          "time": "12:19 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Peeth mein",
+          "time": "12:19 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Bukhar ke saath sardi, thand ya ulti jaisa lag raha hai?",
+          "time": "12:19 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Thand lag rahi hai",
+          "time": "12:19 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Kya aapko pehle se BP, Diabetes ya Thyroid ki bimari hai?",
+          "time": "12:19 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "High BP hai",
+          "time": "12:19 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Kya aap abhi koi regular dawai kha rahe hain?",
+          "time": "12:19 am",
+          "streaming": false
+        }
+      ],
+      "createdAt": "2026-09-11T18:50:04.976Z",
+      "status": "completed",
+      "doctorNotes": "Consultation completed. Rx provided.",
+      "completedAt": "2026-09-11T18:50:16.982Z"
+    },
+    {
+      "token": "106",
+      "patientId": "P-8801",
+      "name": "Ramesh Sharma",
+      "age": 48,
+      "gender": "Male",
+      "abhaId": "91-8842-1092-4402",
+      "language": "Hindi",
+      "chiefComplaint": "hello",
+      "historyStatus": "Complete (AI Verified)",
+      "documentsCount": 3,
+      "priority": "Normal",
+      "triageReason": "Standard OPD Intake",
+      "intakeTime": "10:14 AM",
+      "duration": "4 mins",
+      "caseData": {
+        "hpi": "Patient reported: \"hello\". Duration/Onset: Peeth mein. Location/Characteristics: Sir dard bhi hai. AI clinical triage conducted in English.",
+        "pastHistory": "Essential Hypertension (Stage 1), No known diabetes",
+        "currentMeds": [
+          "Tab. Amlodipine 5mg OD",
+          "Tab. Paracetamol 650mg SOS"
+        ],
+        "allergies": [
+          "NKDA (No Known Drug Allergies)"
+        ],
+        "familyHistory": "Father died of sudden cardiac arrest at age 54.",
+        "lifestyle": "Non-smoker, mild alcohol consumption occasionally.",
+        "reviewOfSystems": {
+          "cardiovascular": "Chest pain, palpitations (+)",
+          "respiratory": "Mild breathlessness on exertion (+)",
+          "gastrointestinal": "No nausea or vomiting (-)",
+          "neurological": "No dizziness, no syncope (-)"
+        },
+        "extractedReports": [
+          {
+            "id": "REP-01",
+            "date": "15 Jan 2026",
+            "type": "ECG Report",
+            "test": "Sinus Rhythm, Mild ST elevation in II, III, aVF",
+            "source": "District OPD OCR Scan",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-02",
+            "date": "02 Oct 2025",
+            "type": "Blood Investigation",
+            "test": "Hb: 14.2 g/dL, BP: 154/96 mmHg, HbA1c: 5.9%",
+            "source": "City Diagnostics",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-03",
+            "date": "10 Jun 2025",
+            "type": "Prescription",
+            "test": "Amlodipine 5mg + Telmisartan 40mg prescribed",
+            "source": "Government Hospital",
+            "status": "Verified"
+          }
+        ]
+      },
+      "conversation": [
+        {
+          "sender": "ai",
+          "text": "नमस्ते! आज आपको क्या तकलीफ़ है?\nकृपया बताइए।",
+          "time": "12:16 am"
+        },
+        {
+          "sender": "patient",
+          "text": "hello",
+          "time": "12:16 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Dard kaisa mehsoos ho raha hai? Kya yeh baayein haath ya peeth mein ja raha hai?",
+          "time": "12:16 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Peeth mein",
+          "time": "12:16 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Bukhar ke saath sardi, thand ya ulti jaisa lag raha hai?",
+          "time": "12:16 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Sir dard bhi hai",
+          "time": "12:16 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Kya aapko pehle se BP, Diabetes ya Thyroid ki bimari hai?",
+          "time": "12:16 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "High BP hai",
+          "time": "12:16 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Kya aap abhi koi regular dawai kha rahe hain?",
+          "time": "12:16 am",
+          "streaming": false
+        },
+        {
+          "sender": "patient",
+          "text": "Rozana BP ki goli",
+          "time": "12:17 am"
+        },
+        {
+          "sender": "ai",
+          "text": "Kya kisi dawai ya injection se koi allergy hai?",
+          "time": "12:17 am",
+          "streaming": false
+        }
+      ],
+      "createdAt": "2026-09-11T18:47:17.795Z",
+      "status": "completed",
+      "doctorNotes": "Consultation completed. Rx provided.",
+      "completedAt": "2026-09-11T18:47:22.319Z"
+    },
+    {
+      "token": "101",
+      "name": "Ramesh Kumar",
+      "age": 45,
+      "gender": "Male",
+      "abhaId": "91-4829-1029-4821",
+      "priority": "Normal",
+      "triageReason": "Standard Intake",
+      "historyStatus": "Complete",
+      "chiefComplaint": "Moderate headache and dizziness for past 2 days",
+      "conversation": [
+        {
+          "sender": "ai",
+          "text": "नमस्ते! आज आपको क्या तकलीफ़ है?",
+          "time": "09:30 AM"
+        },
+        {
+          "sender": "patient",
+          "text": "Sir dard aur chakkar aa rahe hain do din se.",
+          "time": "09:31 AM"
+        }
+      ],
+      "caseData": {
+        "hpi": "45-year-old male reporting moderate tension headache and episodic lightheadedness.",
+        "pastHistory": "Mild hypertension, non-smoker.",
+        "currentMeds": [
+          "Tab. Amlodipine 5mg OD"
+        ],
+        "allergies": [
+          "No known allergies"
+        ],
+        "familyHistory": "Father had hypertension."
+      },
+      "doctorNotes": "",
+      "status": "waiting"
+    },
+    {
+      "token": "102",
+      "name": "Sushila Devi",
+      "age": 62,
+      "gender": "Female",
+      "abhaId": "91-3829-5511-9022",
+      "priority": "High Priority",
+      "triageReason": "Chest tightness radiating to left arm",
+      "historyStatus": "Complete",
+      "chiefComplaint": "Acute retrosternal discomfort and sweating",
+      "conversation": [
+        {
+          "sender": "ai",
+          "text": "नमस्ते! आज आपको क्या तकलीफ़ है?",
+          "time": "09:40 AM"
+        },
+        {
+          "sender": "patient",
+          "text": "Seene me bohot dard hai aur paseena aa raha hai.",
+          "time": "09:41 AM"
+        }
+      ],
+      "caseData": {
+        "hpi": "62-year-old female experiencing severe central chest pain radiating to left arm for past 2 hours with cold sweats.",
+        "pastHistory": "Type 2 Diabetes (10 yrs), Hypertension.",
+        "currentMeds": [
+          "Tab. Metformin 500mg BD",
+          "Tab. Telmisartan 40mg OD"
+        ],
+        "allergies": [
+          "Penicillin Allergy"
+        ],
+        "familyHistory": "Mother had coronary artery disease."
+      },
+      "doctorNotes": "",
+      "status": "waiting"
+    },
+    {
+      "token": "103",
+      "name": "Anil Singh",
+      "age": 38,
+      "gender": "Male",
+      "abhaId": "91-1123-8822-7711",
+      "priority": "Normal",
+      "triageReason": "Persistent fever",
+      "historyStatus": "Complete",
+      "chiefComplaint": "High fever and body aches for 3 days",
+      "conversation": [],
+      "caseData": {
+        "hpi": "38-year-old male with fever up to 102F and severe chills.",
+        "pastHistory": "No chronic illness.",
+        "currentMeds": [
+          "Tab. Paracetamol 650mg SOS"
+        ],
+        "allergies": [
+          "None"
+        ],
+        "familyHistory": "Nil"
+      },
+      "doctorNotes": "",
+      "status": "waiting"
+    }
+  ]
+}
