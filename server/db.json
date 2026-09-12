@@ -20,7 +20,11 @@
         "pastHistory": "Essential Hypertension (Stage 1), No known diabetes",
         "currentMeds": [
           "Tab. Amlodipine 5mg OD",
-          "Tab. Paracetamol 650mg SOS"
+          "Tab. Paracetamol 650mg SOS",
+          "Tab. Amlodipine 5 mg",
+          "Tab. Telmisartan 40 mg",
+          "Tab. Paracetamol 650 mg",
+          "Tab. Sorbitrate 5 mg"
         ],
         "allergies": [
           "NKDA (No Known Drug Allergies)"
@@ -122,10 +126,11 @@
           "streaming": false
         }
       ],
-      "createdAt": "2026-09-12T04:09:29.721Z",
-      "status": "waiting",
+      "createdAt": "2026-09-11T20:57:40.326Z",
+      "status": "completed",
       "doctorNotes": "Consultation completed. Rx provided.",
-      "completedAt": "2026-09-11T18:47:22.319Z"
+      "completedAt": "2026-09-12T05:28:56.203Z",
+      "updatedAt": "2026-09-12T05:28:41.425Z"
     },
     {
       "token": "111",

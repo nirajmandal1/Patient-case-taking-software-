@@ -203,6 +203,7 @@ export const DemoProvider = ({ children }) => {
         ? "Acute Chest Pain / Radiation detected by AI Interview"
         : "Standard OPD Intake",
       historyStatus: "Complete (AI Verified)",
+      consultationStatus: "incomplete",
       conversation: conversation,
       caseData: {
         ...patientData.caseData,
@@ -225,7 +226,11 @@ export const DemoProvider = ({ children }) => {
 
   // Submit case to Server Database & Route to Doctor Queue
   const sendCaseToDoctor = async (patientToSubmit) => {
-    const patient = patientToSubmit || patientData;
+    const rawPatient = patientToSubmit || patientData;
+    const patient = {
+      ...rawPatient,
+      consultationStatus: rawPatient.consultationStatus || "incomplete"
+    };
 
     // 1. Update local queue immediately
     setActiveQueue((prev) => {

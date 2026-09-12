@@ -41,6 +41,7 @@ import { jsPDF } from "jspdf";
 export const DoctorDashboardPage = () => {
   const {
     activeQueue,
+    setActiveQueue,
     patientData,
     setPatientData,
     setActiveTab,
@@ -169,8 +170,48 @@ export const DoctorDashboardPage = () => {
     }
   };
 
+  const handleOpenPatientPDF = (targetPatient = selectedPatient, e) => {
+    if (e && typeof e.stopPropagation === "function") {
+      e.stopPropagation();
+    }
+    try {
+      const doc = generatePatientPDF(targetPatient, targetPatient.conversation || patientConversation);
+      const blob = doc.output("blob");
+      const blobUrl = URL.createObjectURL(blob);
+      window.open(blobUrl, "_blank");
+    } catch (err) {
+      console.error("PDF View error:", err);
+      handleDownloadPDF(targetPatient);
+    }
+  };
+
   const handleCompleteConsultation = async () => {
     setConsultationStatus("completed");
+
+    const updatedPatient = {
+      ...selectedPatient,
+      consultationStatus: "completed",
+      doctorNotes: doctorNotes || "Consultation completed. Rx provided."
+    };
+    setSelectedPatient(updatedPatient);
+
+    if (setActiveQueue) {
+      setActiveQueue((prevQueue) => {
+        const updated = prevQueue.map((p) =>
+          p.token === selectedPatient.token
+            ? { ...p, consultationStatus: "completed", doctorNotes: doctorNotes || "Consultation completed. Rx provided." }
+            : p
+        );
+        localStorage.setItem("medikiosk_queue", JSON.stringify(updated));
+        return updated;
+      });
+    }
+
+    if (patientData && patientData.token === selectedPatient.token) {
+      setPatientData(updatedPatient);
+      localStorage.setItem("medikiosk_current_patient", JSON.stringify(updatedPatient));
+    }
+
     try {
       await fetch(`/api/patient/${selectedPatient.token}/complete`, {
         method: "PUT",
@@ -180,7 +221,7 @@ export const DoctorDashboardPage = () => {
     } catch (e) {
       console.warn("Server update notice:", e.message);
     }
-    alert(`✅ Consultation for Patient Token #${selectedPatient.token} completed. EHR record pushed to ABDM Gateway & saved to server database!`);
+    alert(`✅ Consultation for Patient Token #${selectedPatient.token} completed. Status updated to COMPLETED!`);
   };
 
   const sidebarItems = [
@@ -317,13 +358,17 @@ export const DoctorDashboardPage = () => {
             </div>
 
             <div className="grid grid-cols-4 gap-2.5 text-xs">
-              <div className="bg-blue-50/80 border border-blue-200/80 p-2.5 rounded-2xl text-center min-w-[75px]">
-                <span className="text-xl font-black text-blue-700">{activeQueue.length}</span>
+              <div className="bg-amber-50/80 border border-amber-200/80 p-2.5 rounded-2xl text-center min-w-[75px]">
+                <span className="text-xl font-black text-amber-700">
+                  {activeQueue.filter((p) => p.consultationStatus !== "completed").length}
+                </span>
                 <br />
-                <span className="text-slate-500 text-[10px] font-bold">In Queue</span>
+                <span className="text-slate-500 text-[10px] font-bold">Incomplete</span>
               </div>
               <div className="bg-emerald-50/80 border border-emerald-200/80 p-2.5 rounded-2xl text-center min-w-[75px]">
-                <span className="text-xl font-black text-emerald-700">18</span>
+                <span className="text-xl font-black text-emerald-700">
+                  {18 + activeQueue.filter((p) => p.consultationStatus === "completed").length}
+                </span>
                 <br />
                 <span className="text-slate-500 text-[10px] font-bold">Completed</span>
               </div>
@@ -553,13 +598,15 @@ export const DoctorDashboardPage = () => {
                         <th className="pb-2.5 font-bold">Patient Name</th>
                         <th className="pb-2.5 font-bold">Age/Sex</th>
                         <th className="pb-2.5 font-bold">Triage Priority</th>
-                        <th className="pb-2.5 font-bold">Intake Status</th>
+                        <th className="pb-2.5 font-bold">Consultation Status</th>
+                        <th className="pb-2.5 font-bold text-center">Case Sheet</th>
                       </tr>
                     </thead>
                     <tbody>
                       {activeQueue.map((pt) => {
                         const isSelected = selectedPatient.token === pt.token;
                         const isLiveNew = pt.token === patientData.token;
+                        const isCompleted = pt.consultationStatus === "completed";
                         return (
                           <tr
                             key={pt.token}
@@ -604,9 +651,25 @@ export const DoctorDashboardPage = () => {
                               )}
                             </td>
                             <td className="py-3">
-                              <span className="text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md text-[10px]">
-                                ✓ Ready
-                              </span>
+                              {isCompleted ? (
+                                <span className="text-emerald-800 font-extrabold bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-lg text-[10px] inline-flex items-center gap-1 shadow-2xs">
+                                  <CheckCircle2 size={11} className="text-emerald-600" /> Completed
+                                </span>
+                              ) : (
+                                <span className="text-amber-800 font-bold bg-amber-50 border border-amber-300 px-2.5 py-1 rounded-lg text-[10px] inline-flex items-center gap-1">
+                                  <Clock size={11} className="text-amber-600" /> Incomplete
+                                </span>
+                              )}
+                            </td>
+                            <td className="py-3 text-center">
+                              <button
+                                onClick={(e) => handleOpenPatientPDF(pt, e)}
+                                className="inline-flex items-center gap-1 bg-blue-50 hover:bg-blue-600 hover:text-white text-blue-700 border border-blue-200 px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer"
+                                title="View Patient Case Sheet PDF in browser"
+                              >
+                                <Eye size={12} />
+                                <span>View PDF ↗</span>
+                              </button>
                             </td>
                           </tr>
                         );
@@ -669,6 +732,15 @@ export const DoctorDashboardPage = () => {
                           TOKEN #{selectedPatient.token}
                         </span>
                         <span className="text-[10px] text-slate-400">ABHA: {selectedPatient.abhaId}</span>
+                        {selectedPatient.consultationStatus === "completed" ? (
+                          <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1">
+                            <CheckCircle2 size={11} className="text-emerald-600" /> Completed
+                          </span>
+                        ) : (
+                          <span className="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                            <Clock size={11} className="text-amber-600" /> Incomplete
+                          </span>
+                        )}
                       </div>
                       <div className="flex items-center gap-2 mt-1">
                         <h3 className="font-black text-xl text-slate-900">{selectedPatient.name}</h3>
@@ -691,13 +763,22 @@ export const DoctorDashboardPage = () => {
                     </div>
                   )}
 
-                  <button
-                    onClick={() => handleDownloadPDF(selectedPatient)}
-                    title="Download / Print Case Sheet PDF"
-                    className="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 p-2 rounded-xl transition cursor-pointer flex items-center gap-1 text-xs font-bold shrink-0"
-                  >
-                    <Download size={15} /> PDF
-                  </button>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <button
+                      onClick={() => handleOpenPatientPDF(selectedPatient)}
+                      title="View Case Sheet PDF directly in browser"
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 text-xs shadow-sm"
+                    >
+                      <Eye size={13} /> View PDF ↗
+                    </button>
+                    <button
+                      onClick={() => handleDownloadPDF(selectedPatient)}
+                      title="Download Case Sheet PDF"
+                      className="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 p-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 text-xs font-bold"
+                    >
+                      <Download size={15} />
+                    </button>
+                  </div>
                 </div>
 
                 {/* Priority Alert Banner */}
@@ -822,12 +903,21 @@ export const DoctorDashboardPage = () => {
                     >
                       <Edit size={14} /> Edit Summary
                     </button>
-                    <button
-                      onClick={handleCompleteConsultation}
-                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow-md transition cursor-pointer"
-                    >
-                      <CheckCircle2 size={14} /> Complete Consultation
-                    </button>
+                    {selectedPatient.consultationStatus === "completed" ? (
+                      <button
+                        onClick={() => alert(`Consultation for Token #${selectedPatient.token} is already completed!`)}
+                        className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow-md transition cursor-pointer"
+                      >
+                        <CheckCircle2 size={14} /> Consultation Completed ✓
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleCompleteConsultation}
+                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow-md transition cursor-pointer"
+                      >
+                        <CheckCircle2 size={14} /> Complete Consultation
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

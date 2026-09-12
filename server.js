@@ -82,6 +82,7 @@ app.put("/api/patient/:token/complete", (req, res) => {
   }
 
   patient.status = "completed";
+  patient.consultationStatus = "completed";
   patient.doctorNotes = doctorNotes || "Consultation completed. Advice given.";
   patient.completedAt = new Date().toISOString();
 
