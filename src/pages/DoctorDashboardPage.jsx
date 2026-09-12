@@ -49,7 +49,7 @@ export const DoctorDashboardPage = () => {
   } = useDemo();
 
   const [selectedPatient, setSelectedPatient] = useState(patientData);
-  const [sidebarItem, setSidebarItem] = useState("queue"); // "dashboard", "queue", "history", "documents", "timeline", "settings"
+  const [sidebarItem, setSidebarItem] = useState("queue"); // "dashboard", "queue", "history", "documents", "settings"
   const [doctorNotes, setDoctorNotes] = useState("");
   const [activePanelTab, setActivePanelTab] = useState("summary"); // "summary", "chat"
   const [consultationStatus, setConsultationStatus] = useState("waiting");
@@ -239,7 +239,6 @@ export const DoctorDashboardPage = () => {
     { id: "queue", label: "Patient Queue", icon: ClipboardList, badge: activeQueue.length },
     { id: "history", label: "Patient History", icon: History, badge: null },
     { id: "documents", label: "Documents", icon: FolderOpen, badge: "3" },
-    { id: "timeline", label: "Timeline", icon: Clock, badge: null },
     { id: "settings", label: "Settings", icon: Settings, badge: null }
   ];
 
@@ -1496,69 +1495,7 @@ export const DoctorDashboardPage = () => {
           )}
 
           {/* =============================================================== */}
-          {/* 5. TIMELINE VIEW: Patient Longitudinal Health History            */}
-          {/* =============================================================== */}
-          {sidebarItem === "timeline" && (
-            <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-5">
-              <div className="flex justify-between items-center border-b pb-4">
-                <div>
-                  <h2 className="text-lg font-black text-slate-900">
-                    Patient Longitudinal Health Timeline
-                  </h2>
-                  <p className="text-xs text-slate-500">
-                    Chronological audit of {selectedPatient.name}'s prior hospital visits, ECGs, tests & prescriptions
-                  </p>
-                </div>
-                <span className="bg-blue-50 text-blue-800 text-xs font-bold px-3 py-1 rounded-xl">
-                  Token #{selectedPatient.token}
-                </span>
-              </div>
-
-              {/* Timeline Items */}
-              <div className="relative pl-6 border-l-2 border-blue-200 space-y-6 my-4">
-                {[
-                  {
-                    date: "15 Jan 2026",
-                    title: "12-Lead ECG Investigation",
-                    source: "District OPD OCR Scan",
-                    summary: "Sinus Rhythm with mild ST segment elevation in II, III, aVF. Early cardiac review indicated.",
-                    badge: "Verified Test"
-                  },
-                  {
-                    date: "02 Oct 2025",
-                    title: "Comprehensive Metabolic & Blood Panel",
-                    source: "City Diagnostics Lab",
-                    summary: "Hb: 14.2 g/dL (Normal), BP: 154/96 mmHg (Elevated Stage 2), HbA1c: 5.9% (Pre-diabetic).",
-                    badge: "Lab Report"
-                  },
-                  {
-                    date: "10 Jun 2025",
-                    title: "General Medicine OPD Consultation",
-                    source: "Government Hospital OPD",
-                    summary: "Tab. Amlodipine 5mg OD + Tab. Telmisartan 40mg prescribed for persistent hypertension.",
-                    badge: "Prescription"
-                  }
-                ].map((item, idx) => (
-                  <div key={idx} className="relative group">
-                    <div className="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow-xs"></div>
-                    <div className="bg-slate-50 hover:bg-blue-50/40 p-4 rounded-2xl border border-slate-200 transition space-y-1.5">
-                      <div className="flex justify-between items-center text-xs">
-                        <span className="bg-blue-100 text-blue-900 font-extrabold px-2.5 py-0.5 rounded-lg text-[10px]">
-                          {item.date}
-                        </span>
-                        <span className="text-[10px] text-slate-400">{item.source}</span>
-                      </div>
-                      <h4 className="font-extrabold text-sm text-slate-900">{item.title}</h4>
-                      <p className="text-xs text-slate-600 leading-relaxed font-medium">{item.summary}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* =============================================================== */}
-          {/* 6. SETTINGS VIEW: Doctor Chamber & AI Triage Configuration       */}
+          {/* 5. SETTINGS VIEW: Doctor Chamber & AI Triage Configuration       */}
           {/* =============================================================== */}
           {sidebarItem === "settings" && (
             <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-6">

@@ -14,7 +14,6 @@ import { DocumentScannerPage } from "./pages/DocumentScannerPage";
 import { OCRResultsPage } from "./pages/OCRResultsPage";
 import { ClinicalSummaryPage } from "./pages/ClinicalSummaryPage";
 import { DoctorDashboardPage } from "./pages/DoctorDashboardPage";
-import { TimelinePage } from "./pages/TimelinePage";
 import { AyushIntakePage } from "./pages/AyushIntakePage";
 import { ArchitecturePage } from "./pages/ArchitecturePage";
 import { SecurityPage } from "./pages/SecurityPage";
@@ -38,7 +37,6 @@ export const AppContent = () => {
         {activeTab === "ocr-results" && <OCRResultsPage />}
         {activeTab === "summary" && <ClinicalSummaryPage />}
         {activeTab === "doctor" && <DoctorDashboardPage />}
-        {activeTab === "timeline" && <TimelinePage />}
         {activeTab === "ayush" && <AyushIntakePage />}
         {activeTab === "architecture" && <ArchitecturePage />}
         {activeTab === "security" && <SecurityPage />}

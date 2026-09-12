@@ -154,17 +154,6 @@ export const Header = () => {
               >
                 <LayoutDashboard size={14} /> OPD Consultation Desk
               </button>
-
-              <button
-                onClick={() => setActiveTab("timeline")}
-                className={`px-3.5 py-1.5 rounded-xl transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-                  activeTab === "timeline"
-                    ? "bg-white text-indigo-700 font-extrabold shadow-xs"
-                    : "text-slate-600 hover:text-slate-900"
-                }`}
-              >
-                <Clock size={14} /> Patient Records
-              </button>
             </>
           )}
         </nav>
