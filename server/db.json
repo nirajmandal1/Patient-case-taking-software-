@@ -138,11 +138,11 @@
         }
       ],
       "createdAt": "2026-09-12T07:16:50.760Z",
-      "status": "incomplete",
+      "status": "completed",
       "doctorNotes": "Consultation completed. Rx provided.",
-      "completedAt": "2026-09-12T07:18:25.393Z",
+      "completedAt": "2026-09-12T08:37:17.233Z",
       "updatedAt": "2026-09-12T05:28:41.425Z",
-      "consultationStatus": "incomplete"
+      "consultationStatus": "completed"
     },
     {
       "token": "112",

@@ -258,6 +258,36 @@ export const DemoProvider = ({ children }) => {
     setActiveTab("doctor");
   };
 
+  // Submit case to Server Database & Route to Doctor Queue WITHOUT auto-redirecting
+  const sendCaseOnlyToDoctor = async (patientToSubmit) => {
+    const rawPatient = patientToSubmit || patientData;
+    const patient = {
+      ...rawPatient,
+      token: String(rawPatient.token),
+      consultationStatus: rawPatient.consultationStatus || "incomplete",
+      status: rawPatient.status || "waiting"
+    };
+
+    // 1. Update local queue immediately
+    setActiveQueue((prev) => {
+      const filtered = (prev || []).filter((p) => String(p.token).trim() !== String(patient.token).trim());
+      return [patient, ...filtered];
+    });
+    setPatientData(patient);
+
+    // 2. Persist to Express Server backend
+    try {
+      await fetch("/api/intake", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(patient)
+      });
+      console.log("[Client] Case saved to server successfully!");
+    } catch (err) {
+      console.warn("[Client] Saved locally, server sync error:", err.message);
+    }
+  };
+
   return (
     <DemoContext.Provider
       value={{
@@ -285,6 +315,7 @@ export const DemoProvider = ({ children }) => {
         setPatientConversation,
         saveInterviewAndGenerateSummary,
         sendCaseToDoctor,
+        sendCaseOnlyToDoctor,
         latestToken,
         activeScannedDoc,
         setActiveScannedDoc

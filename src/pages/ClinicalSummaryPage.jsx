@@ -27,7 +27,9 @@ export const ClinicalSummaryPage = () => {
     patientData,
     setPatientData,
     patientConversation,
-    sendCaseToDoctor
+    sendCaseToDoctor,
+    sendCaseOnlyToDoctor,
+    switchRole
   } = useDemo();
 
   const [activeView, setActiveView] = useState("pdf"); // "pdf" or "structured"
@@ -105,15 +107,13 @@ export const ClinicalSummaryPage = () => {
     }
   };
 
-  // Submit to Doctor's Chamber Queue
+  // Submit to Doctor's Chamber Queue WITHOUT automatically redirecting
   const handleSubmitToDoctor = () => {
     setIsSubmitting(true);
+    sendCaseOnlyToDoctor(patientData);
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-      setTimeout(() => {
-        sendCaseToDoctor(patientData);
-      }, 900);
     }, 600);
   };
 
@@ -208,16 +208,27 @@ export const ClinicalSummaryPage = () => {
 
       {/* Success Notification Alert */}
       {isSubmitted && (
-        <div className="bg-emerald-50/90 border-2 border-emerald-400 p-4 rounded-2xl text-emerald-900 text-sm font-bold flex items-center gap-3 shadow-md animate-pulse">
-          <CheckCircle2 size={24} className="text-emerald-600 shrink-0" />
-          <div>
-            <p className="font-extrabold">
-              Case Token #{patientData.token} successfully routed to Dr. Sharma's OPD chamber!
-            </p>
-            <p className="text-xs text-emerald-700 font-normal">
-              Redirecting to Doctor Dashboard now...
-            </p>
+        <div className="bg-emerald-50/95 border-2 border-emerald-400 p-4 rounded-2xl text-emerald-900 text-sm font-bold flex flex-wrap items-center justify-between gap-3 shadow-md">
+          <div className="flex items-center gap-3">
+            <CheckCircle2 size={24} className="text-emerald-600 shrink-0" />
+            <div>
+              <p className="font-extrabold text-emerald-950">
+                Case Token #{patientData.token} successfully sent to Doctor! (केस डॉक्टर के पास भेज दिया गया है)
+              </p>
+              <p className="text-xs text-emerald-700 font-medium">
+                Data saved in OPD queue. You can view it anytime from the "Doctor Portal" button or below.
+              </p>
+            </div>
           </div>
+          <button
+            onClick={() => {
+              switchRole("doctor");
+              setActiveTab("doctor");
+            }}
+            className="bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition active:scale-95 cursor-pointer ml-auto"
+          >
+            <Stethoscope size={14} /> Open Doctor Dashboard Manually (डैशबोर्ड खोलें)
+          </button>
         </div>
       )}
 
@@ -784,14 +795,16 @@ export const ClinicalSummaryPage = () => {
           ← Retake Medical Chatbot
         </button>
 
-        <button
-          onClick={handleSubmitToDoctor}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-8 py-3.5 rounded-2xl flex items-center gap-2 shadow-lg transition transform active:scale-95 cursor-pointer"
-        >
-          <Stethoscope size={18} />
-          <span>Send Case to Doctor & Open Dashboard</span>
-          <ArrowRight size={18} />
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleSubmitToDoctor}
+            disabled={isSubmitting}
+            className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-extrabold px-8 py-3.5 rounded-2xl flex items-center gap-2 shadow-lg transition transform active:scale-95 cursor-pointer"
+          >
+            <Send size={16} />
+            <span>{isSubmitting ? "Sending..." : "Send Case to Doctor (डॉक्टर को भेजें)"}</span>
+          </button>
+        </div>
       </div>
     </div>
   );
