@@ -145,12 +145,23 @@ export const mockSampleDocuments = [
     id: "doc-1",
     title: "OPD Prescription - General Medicine",
     date: "12 Aug 2026",
+    visitDate: "12 Aug 2026",
+    visitType: "Hospital OPD Visit",
     type: "Prescription",
     confidence: "96%",
-    doctor: "Dr. K. S. Verma (MD)",
+    doctor: "Dr. K. S. Verma (MD, Senior Physician)",
     hospital: "District Civil Hospital, Bhopal",
     extractedData: {
+      visitDate: "12 Aug 2026",
+      hospital: "District Civil Hospital, Bhopal",
+      doctor: "Dr. K. S. Verma (MD)",
       diagnosis: "Essential Hypertension & Mild Angina (उच्च रक्तचाप व सीने में जकड़न)",
+      medications: [
+        { name: "Tab. Telmisartan", dosage: "40 mg", frequency: "1 Tab Once Daily (Morning after breakfast)", duration: "30 Days", instruction: "Regular BP checkup" },
+        { name: "Tab. Amlodipine", dosage: "5 mg", frequency: "1 Tab Once Daily (Night after dinner)", duration: "30 Days", instruction: "Do not miss dose" },
+        { name: "Tab. Sorbitrate", dosage: "5 mg", frequency: "1 Tab Sublingually (SOS)", duration: "10 Days", instruction: "Under tongue only if chest pain occurs" },
+        { name: "Tab. Aspirin (Ecosprin)", dosage: "75 mg", frequency: "1 Tab Once Daily (Post lunch)", duration: "30 Days", instruction: "Blood thinner support" }
+      ],
       problems: [
         "सीने में भारीपन व बेचैनी (Chest discomfort on brisk exertion)",
         "अनियंत्रित उच्च रक्तचाप (Elevated Blood Pressure: 148/92 mmHg)",
@@ -167,46 +178,68 @@ export const mockSampleDocuments = [
         "नमक और खान-पान में किन चीजों का परहेज अनिवार्य रूप से रखना होगा?"
       ],
       investigations: ["ECG 12-Lead", "Serum Creatinine", "Lipid Profile"],
-      vitals: "BP: 148/92 mmHg, Pulse: 78 bpm, SpO2: 98%"
+      vitals: "BP: 148/92 mmHg, Pulse: 78 bpm, SpO2: 98%",
+      doctorAdvice: "नमक कम लें (<5g/दिन), रोज़ाना 30 मिनट टहलें, 15 दिन बाद दोबारा दिखाएं।"
     }
   },
   {
     id: "doc-2",
-    title: "Laboratory Diagnostic Report",
+    title: "OPD Review & Laboratory Diagnostic Report",
     date: "10 Jan 2026",
+    visitDate: "10 Jan 2026",
+    visitType: "Hospital OPD Review Visit",
     type: "Blood Test",
     confidence: "94%",
-    doctor: "Pathology Dept",
-    hospital: "Central Diagnostics & Research Center",
+    doctor: "Dr. S. K. Gupta (MD, Diabetologist)",
+    hospital: "Central Diagnostics & Hospital, Bhopal",
     extractedData: {
-      diagnosis: "Metabolic Panel Summary",
-      medications: [],
+      visitDate: "10 Jan 2026",
+      hospital: "Central Diagnostics & Hospital, Bhopal",
+      doctor: "Dr. S. K. Gupta (MD)",
+      diagnosis: "Type 2 Diabetes Mellitus & Dyslipidemia (मधुमेह व कोलेस्ट्रॉल)",
+      medications: [
+        { name: "Tab. Metformin (SR)", dosage: "500 mg", frequency: "1 Tab Twice Daily (Morning & Night after meals)", duration: "60 Days", instruction: "Swallow whole after meals" },
+        { name: "Tab. Glimepiride", dosage: "1 mg", frequency: "1 Tab Once Daily (15 mins before breakfast)", duration: "60 Days", instruction: "Monitor fasting blood sugar" },
+        { name: "Tab. Atorvastatin", dosage: "10 mg", frequency: "1 Tab Once Daily (Night before sleep)", duration: "60 Days", instruction: "Cholesterol control" }
+      ],
       investigations: [
         "Hemoglobin: 13.8 g/dL (Normal)",
-        "Fasting Blood Sugar: 142 mg/dL (Elevated)",
-        "HbA1c: 6.9% (Pre-diabetic / Controlled)",
+        "Fasting Blood Sugar: 142 mg/dL (Elevated / Sugar High)",
+        "HbA1c: 6.9% (Pre-diabetic / Target < 7.0%)",
         "Total Cholesterol: 215 mg/dL (Borderline High)",
         "Serum Creatinine: 0.9 mg/dL (Normal)"
       ],
-      vitals: "N/A"
+      vitals: "Fasting Sugar: 142 mg/dL, HbA1c: 6.9%, BP: 130/84 mmHg",
+      doctorAdvice: "मीठा और तली-भुनी चीजें बंद रखें, नियमित 45 मिनट व्यायाम करें, 3 महीने बाद HbA1c कराएं।"
     }
   },
   {
     id: "doc-3",
-    title: "Hospital Discharge Summary",
+    title: "Hospital Discharge Summary & Post-Discharge Rx",
     date: "24 Nov 2025",
+    visitDate: "24 Nov 2025",
+    visitType: "Hospital Inpatient Discharge",
     type: "Discharge Summary",
     confidence: "92%",
     doctor: "Dr. A. R. Mehta (DM Cardiology)",
-    hospital: "Government Medical College Hospital",
+    hospital: "Government Medical College Hospital, Bhopal",
     extractedData: {
-      diagnosis: "Acute Gastritis & Non-cardiac Chest Discomfort",
+      visitDate: "24 Nov 2025",
+      hospital: "Government Medical College Hospital, Bhopal",
+      doctor: "Dr. A. R. Mehta (DM Cardiology)",
+      diagnosis: "Acute Gastritis & Non-cardiac Chest Discomfort (सीने में जलन व एसिडिटी)",
       medications: [
-        { name: "Cap. Rabeprazole", dosage: "20 mg", frequency: "Once daily before breakfast", duration: "14 Days" },
-        { name: "Syr. Mucaine Gel", dosage: "10 ml", frequency: "TID after meals", duration: "7 Days" }
+        { name: "Cap. Rabeprazole", dosage: "20 mg", frequency: "1 Cap Once Daily (Empty stomach in morning)", duration: "14 Days", instruction: "Take 30 mins before breakfast" },
+        { name: "Syr. Mucaine Gel", dosage: "10 ml", frequency: "2 Tsp Thrice Daily (After meals & bedtime)", duration: "7 Days", instruction: "Do not drink water immediately" },
+        { name: "Tab. Domperidone", dosage: "10 mg", frequency: "1 Tab Twice Daily (Morning & Evening before food)", duration: "5 Days", instruction: "Anti-reflux support" }
       ],
-      investigations: ["Troponin-I: Negative (<0.01 ng/mL)", "Normal ECG", "Endoscopy: Mild antral erythema"],
-      vitals: "BP on discharge: 124/80 mmHg"
+      investigations: [
+        "Troponin-I: Negative (<0.01 ng/mL - Cardiac damage ruled out)",
+        "Normal 12-Lead ECG (No ischemic ST-T changes)",
+        "Upper GI Endoscopy: Mild antral gastritis"
+      ],
+      vitals: "BP on discharge: 124/80 mmHg, Pulse: 74 bpm",
+      doctorAdvice: "मसालेदार खाना बंद रखें, समय पर भोजन करें, तकलीफ़ दोबारा होने पर OPD में तुरंत संपर्क करें।"
     }
   }
 ];

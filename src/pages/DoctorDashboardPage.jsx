@@ -86,27 +86,41 @@ export const DoctorDashboardPage = () => {
       tempDoc.text(docItem.hospital || "CIVIL HOSPITAL OPD - MEDICAL RECORD", 14, 16);
       tempDoc.setFontSize(9);
       tempDoc.setFont("helvetica", "normal");
-      tempDoc.text(`Document: ${docItem.title} | Date: ${docItem.date}`, 14, 22);
-      tempDoc.text(`Physician: ${docItem.doctor || "Dr. K. S. Verma (MD)"}`, 14, 28);
+      tempDoc.text(`Document: ${docItem.title} | Hospital Visit Date: ${docItem.visitDate || docItem.date}`, 14, 22);
+      tempDoc.text(`Consulting Physician: ${docItem.doctor || "Dr. K. S. Verma (MD)"}`, 14, 28);
       tempDoc.text(`Clinical Diagnosis: ${docItem.extractedData?.diagnosis || "OPD Case"}`, 14, 38);
 
+      let currentY = 48;
       if (docItem.extractedData?.medications?.length > 0) {
         tempDoc.setFont("helvetica", "bold");
-        tempDoc.text("Prescribed Medications (Rx):", 14, 48);
+        tempDoc.text("Doctor Prescribed Medications (Rx):", 14, currentY);
+        currentY += 7;
         tempDoc.setFont("helvetica", "normal");
-        docItem.extractedData.medications.forEach((m, idx) => {
-          tempDoc.text(`- ${m.name} ${m.dosage || ""} | ${m.frequency || "Regular"} | ${m.duration || ""}`, 18, 55 + idx * 7);
+        docItem.extractedData.medications.forEach((m) => {
+          tempDoc.text(`- ${m.name} ${m.dosage || ""} | ${m.frequency || "Regular"} | Duration: ${m.duration || ""}`, 18, currentY);
+          currentY += 7;
         });
+        currentY += 3;
       }
 
       if (docItem.extractedData?.investigations?.length > 0) {
-        const invY = 55 + (docItem.extractedData?.medications?.length || 0) * 7 + 8;
         tempDoc.setFont("helvetica", "bold");
-        tempDoc.text("Diagnostic Investigations & Tests:", 14, invY);
+        tempDoc.text("Diagnostic Investigations & Tests:", 14, currentY);
+        currentY += 7;
         tempDoc.setFont("helvetica", "normal");
-        docItem.extractedData.investigations.forEach((inv, idx) => {
-          tempDoc.text(`• ${inv}`, 18, invY + 7 + idx * 6);
+        docItem.extractedData.investigations.forEach((inv) => {
+          tempDoc.text(`• ${inv}`, 18, currentY);
+          currentY += 6;
         });
+        currentY += 3;
+      }
+
+      if (docItem.extractedData?.doctorAdvice) {
+        tempDoc.setFont("helvetica", "bold");
+        tempDoc.text("Doctor Advice / Instructions:", 14, currentY);
+        currentY += 7;
+        tempDoc.setFont("helvetica", "normal");
+        tempDoc.text(docItem.extractedData.doctorAdvice, 18, currentY);
       }
 
       tempDoc.save(`${docItem.title.replace(/\s+/g, "_")}.pdf`);
@@ -123,17 +137,41 @@ export const DoctorDashboardPage = () => {
       tempDoc.text(docItem.hospital || "CIVIL HOSPITAL OPD - MEDICAL RECORD", 14, 16);
       tempDoc.setFontSize(9);
       tempDoc.setFont("helvetica", "normal");
-      tempDoc.text(`Document: ${docItem.title} | Date: ${docItem.date}`, 14, 22);
-      tempDoc.text(`Physician: ${docItem.doctor || "Dr. K. S. Verma (MD)"}`, 14, 28);
+      tempDoc.text(`Document: ${docItem.title} | Hospital Visit Date: ${docItem.visitDate || docItem.date}`, 14, 22);
+      tempDoc.text(`Consulting Physician: ${docItem.doctor || "Dr. K. S. Verma (MD)"}`, 14, 28);
       tempDoc.text(`Clinical Diagnosis: ${docItem.extractedData?.diagnosis || "OPD Case"}`, 14, 38);
 
+      let currentY = 48;
       if (docItem.extractedData?.medications?.length > 0) {
         tempDoc.setFont("helvetica", "bold");
-        tempDoc.text("Prescribed Medications (Rx):", 14, 48);
+        tempDoc.text("Doctor Prescribed Medications (Rx):", 14, currentY);
+        currentY += 7;
         tempDoc.setFont("helvetica", "normal");
-        docItem.extractedData.medications.forEach((m, idx) => {
-          tempDoc.text(`- ${m.name} ${m.dosage || ""} | ${m.frequency || "Regular"} | ${m.duration || ""}`, 18, 55 + idx * 7);
+        docItem.extractedData.medications.forEach((m) => {
+          tempDoc.text(`- ${m.name} ${m.dosage || ""} | ${m.frequency || "Regular"} | Duration: ${m.duration || ""}`, 18, currentY);
+          currentY += 7;
         });
+        currentY += 3;
+      }
+
+      if (docItem.extractedData?.investigations?.length > 0) {
+        tempDoc.setFont("helvetica", "bold");
+        tempDoc.text("Diagnostic Investigations & Tests:", 14, currentY);
+        currentY += 7;
+        tempDoc.setFont("helvetica", "normal");
+        docItem.extractedData.investigations.forEach((inv) => {
+          tempDoc.text(`• ${inv}`, 18, currentY);
+          currentY += 6;
+        });
+        currentY += 3;
+      }
+
+      if (docItem.extractedData?.doctorAdvice) {
+        tempDoc.setFont("helvetica", "bold");
+        tempDoc.text("Doctor Advice / Instructions:", 14, currentY);
+        currentY += 7;
+        tempDoc.setFont("helvetica", "normal");
+        tempDoc.text(docItem.extractedData.doctorAdvice, 18, currentY);
       }
 
       const blob = tempDoc.output("blob");
@@ -1481,45 +1519,90 @@ export const DoctorDashboardPage = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {mockSampleDocuments.map((docItem) => (
-                  <div
-                    key={docItem.id}
-                    className="bg-slate-50 border border-slate-200 hover:border-blue-400 rounded-3xl p-5 space-y-3 transition flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex justify-between items-start">
-                        <span className="bg-blue-100 text-blue-800 text-[10px] font-black uppercase px-2 py-0.5 rounded">
-                          {docItem.type}
-                        </span>
-                        <span className="text-[10px] text-slate-400 font-mono">{docItem.date}</span>
+                {mockSampleDocuments
+                  .filter((docItem) => {
+                    if (docFilter === "all") return true;
+                    if (docFilter === "prescriptions") return docItem.type.toLowerCase().includes("prescription");
+                    if (docFilter === "lab") return docItem.type.toLowerCase().includes("blood") || docItem.type.toLowerCase().includes("lab");
+                    if (docFilter === "discharge") return docItem.type.toLowerCase().includes("discharge");
+                    return true;
+                  })
+                  .map((docItem) => (
+                    <div
+                      key={docItem.id}
+                      className="bg-slate-50 border border-slate-200 hover:border-blue-400 rounded-3xl p-5 space-y-3.5 transition flex flex-col justify-between shadow-2xs hover:shadow-sm"
+                    >
+                      <div className="space-y-3">
+                        {/* Top Badge + Visit Date */}
+                        <div className="flex justify-between items-center">
+                          <span className="bg-blue-100 text-blue-800 text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full">
+                            {docItem.type}
+                          </span>
+                          <span className="bg-blue-50 text-blue-900 border border-blue-200 text-[11px] font-extrabold px-2.5 py-0.5 rounded-lg flex items-center gap-1">
+                            <Calendar size={12} className="text-blue-600" />
+                            <span>Visit: {docItem.visitDate || docItem.date}</span>
+                          </span>
+                        </div>
+
+                        <div>
+                          <h3 className="font-black text-slate-900 text-sm leading-snug">{docItem.title}</h3>
+                          <p className="text-[11px] text-slate-700 font-bold mt-1 flex items-center gap-1">
+                            <Stethoscope size={13} className="text-blue-600 shrink-0" />
+                            <span className="truncate">{docItem.doctor}</span>
+                          </p>
+                          <p className="text-[10px] text-slate-400 mt-0.5">{docItem.hospital}</p>
+                        </div>
+
+                        {/* Prescribed Medicines Box */}
+                        <div className="bg-white p-3 rounded-2xl border border-slate-200 text-xs space-y-2">
+                          <div className="flex justify-between items-center">
+                            <span className="text-[10px] text-slate-500 font-black uppercase tracking-wider flex items-center gap-1">
+                              💊 Doctor Prescribed Medicines
+                            </span>
+                            <span className="text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-1.5 py-0.2 rounded">
+                              {docItem.extractedData?.medications?.length || 0} Meds
+                            </span>
+                          </div>
+
+                          <div className="space-y-1">
+                            {(docItem.extractedData?.medications || []).slice(0, 3).map((m, idx) => (
+                              <div key={idx} className="bg-slate-50 p-1.5 rounded-xl border border-slate-100 flex items-center justify-between text-[11px]">
+                                <div className="truncate pr-1">
+                                  <span className="font-bold text-slate-800 block truncate">{m.name} {m.dosage}</span>
+                                  <span className="text-[10px] text-slate-500">{m.frequency?.split("(")[0]}</span>
+                                </div>
+                                <span className="text-[10px] bg-blue-50 text-blue-700 font-bold px-1.5 py-0.5 rounded shrink-0">
+                                  {m.duration}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="border-t border-slate-100 pt-1.5 text-[11px]">
+                            <strong className="text-slate-500 text-[10px] uppercase block">Clinical Diagnosis:</strong>
+                            <p className="font-bold text-blue-900 leading-snug mt-0.5">{docItem.extractedData.diagnosis}</p>
+                          </div>
+                        </div>
                       </div>
-                      <h3 className="font-extrabold text-slate-900 text-sm mt-2">{docItem.title}</h3>
-                      <p className="text-[11px] text-slate-500 mt-0.5">{docItem.hospital}</p>
-                    </div>
 
-                    <div className="bg-white p-3 rounded-2xl border border-slate-200 text-xs space-y-1">
-                      <span className="text-[10px] text-slate-400 font-bold uppercase block">Extracted Findings:</span>
-                      <p className="font-semibold text-slate-800">{docItem.extractedData.diagnosis}</p>
-                      <p className="text-[11px] text-slate-600">{docItem.extractedData.vitals}</p>
+                      {/* Actions */}
+                      <div className="flex gap-2 pt-1">
+                        <button
+                          onClick={() => setSelectedDocModal(docItem)}
+                          className="flex-1 bg-white hover:bg-blue-50 text-blue-700 border border-slate-200 font-bold text-xs py-2 rounded-xl flex items-center justify-center gap-1 transition cursor-pointer"
+                        >
+                          <Eye size={13} /> View OCR & Rx
+                        </button>
+                        <button
+                          onClick={() => handleDownloadSingleDoc(docItem)}
+                          title="Download Document PDF"
+                          className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs p-2 rounded-xl transition cursor-pointer flex items-center justify-center"
+                        >
+                          <Download size={15} />
+                        </button>
+                      </div>
                     </div>
-
-                    <div className="flex gap-2 pt-1">
-                      <button
-                        onClick={() => setSelectedDocModal(docItem)}
-                        className="flex-1 bg-white hover:bg-blue-50 text-blue-700 border border-slate-200 font-bold text-xs py-2 rounded-xl flex items-center justify-center gap-1 transition cursor-pointer"
-                      >
-                        <Eye size={13} /> View OCR
-                      </button>
-                      <button
-                        onClick={() => handleDownloadSingleDoc(docItem)}
-                        title="Download Document PDF"
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs p-2 rounded-xl transition cursor-pointer"
-                      >
-                        <Download size={15} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
           )}
@@ -1646,7 +1729,7 @@ export const DoctorDashboardPage = () => {
                   {selectedDocModal.type}
                 </span>
                 <h3 className="text-xl font-black text-slate-900 mt-1">{selectedDocModal.title}</h3>
-                <p className="text-xs text-slate-500">{selectedDocModal.hospital} • {selectedDocModal.date}</p>
+                <p className="text-xs text-slate-500">{selectedDocModal.hospital}</p>
               </div>
               <button
                 onClick={() => setSelectedDocModal(null)}
@@ -1656,33 +1739,70 @@ export const DoctorDashboardPage = () => {
               </button>
             </div>
 
+            {/* Hospital Visit Date Banner */}
+            <div className="bg-blue-50/90 border border-blue-200 p-3.5 rounded-2xl flex items-center justify-between text-xs shadow-2xs">
+              <div className="flex items-center gap-2">
+                <Calendar size={18} className="text-blue-600 shrink-0" />
+                <div>
+                  <span className="font-extrabold text-blue-950 block text-xs">
+                    Patient Hospital Visit Date (अस्पताल आने की तारीख):
+                  </span>
+                  <span className="text-[11px] text-blue-700">Official medical record timestamp</span>
+                </div>
+              </div>
+              <span className="font-black text-blue-800 bg-white px-3 py-1.5 rounded-xl border border-blue-200 text-xs font-mono shadow-2xs">
+                {selectedDocModal.visitDate || selectedDocModal.date}
+              </span>
+            </div>
+
             {/* Document Details Card */}
             <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3 text-xs">
               <div className="flex justify-between">
-                <span className="font-bold text-slate-500">Physician:</span>
-                <strong className="text-slate-900">{selectedDocModal.doctor}</strong>
+                <span className="font-bold text-slate-500">Consulting Physician:</span>
+                <strong className="text-slate-900 font-extrabold">{selectedDocModal.doctor}</strong>
+              </div>
+              <div className="flex justify-between border-t pt-2">
+                <span className="font-bold text-slate-500">Hospital / Facility:</span>
+                <span className="text-slate-800 font-semibold">{selectedDocModal.hospital}</span>
               </div>
               <div className="flex justify-between border-t pt-2">
                 <span className="font-bold text-slate-500">Clinical Diagnosis:</span>
-                <strong className="text-blue-900">{selectedDocModal.extractedData?.diagnosis}</strong>
+                <strong className="text-blue-900 font-extrabold">{selectedDocModal.extractedData?.diagnosis}</strong>
               </div>
               <div className="flex justify-between border-t pt-2">
-                <span className="font-bold text-slate-500">Vitals Recorded:</span>
-                <span className="text-slate-800 font-mono">{selectedDocModal.extractedData?.vitals}</span>
+                <span className="font-bold text-slate-500">Vitals Recorded on Visit:</span>
+                <span className="text-slate-800 font-mono font-bold">{selectedDocModal.extractedData?.vitals}</span>
               </div>
             </div>
 
             {/* Prescribed Medications */}
             {selectedDocModal.extractedData?.medications?.length > 0 && (
               <div className="space-y-2">
-                <h4 className="text-xs font-black text-slate-900 uppercase tracking-wider">
-                  Prescribed Medications (Rx):
-                </h4>
-                <div className="space-y-1.5">
+                <div className="flex justify-between items-center">
+                  <h4 className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                    💊 Doctor Prescribed Medications (डॉक्टर द्वारा दी गई दवाइयाँ):
+                  </h4>
+                  <span className="text-[11px] text-blue-700 font-bold">
+                    {selectedDocModal.extractedData.medications.length} Prescribed
+                  </span>
+                </div>
+                <div className="space-y-2">
                   {selectedDocModal.extractedData.medications.map((m, idx) => (
-                    <div key={idx} className="bg-blue-50/60 p-3 rounded-xl border border-blue-100 flex justify-between text-xs">
-                      <strong className="text-slate-900">{m.name} {m.dosage}</strong>
-                      <span className="text-slate-600">{m.frequency} — {m.duration}</span>
+                    <div key={idx} className="bg-blue-50/50 p-3.5 rounded-2xl border border-blue-100 space-y-1 text-xs">
+                      <div className="flex justify-between items-center">
+                        <strong className="text-slate-900 text-sm font-black">{m.name} {m.dosage}</strong>
+                        <span className="bg-blue-100 text-blue-800 font-extrabold text-[10px] px-2 py-0.5 rounded-md">
+                          {m.duration}
+                        </span>
+                      </div>
+                      <p className="text-blue-900 font-medium text-[11px]">
+                        <strong>Frequency & Timing:</strong> {m.frequency}
+                      </p>
+                      {m.instruction && (
+                        <p className="text-slate-500 text-[10px]">
+                          <strong>Special Instruction:</strong> {m.instruction}
+                        </p>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -1693,16 +1813,28 @@ export const DoctorDashboardPage = () => {
             {selectedDocModal.extractedData?.investigations?.length > 0 && (
               <div className="space-y-2">
                 <h4 className="text-xs font-black text-slate-900 uppercase tracking-wider">
-                  Lab Investigations & Findings:
+                  Lab Investigations & Diagnostic Findings:
                 </h4>
                 <div className="space-y-1">
                   {selectedDocModal.extractedData.investigations.map((inv, idx) => (
                     <div key={idx} className="bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-800 flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
                       <span>{inv}</span>
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {/* Doctor Advice / Recommendations */}
+            {selectedDocModal.extractedData?.doctorAdvice && (
+              <div className="bg-amber-50/80 border border-amber-200 p-3.5 rounded-2xl text-xs space-y-1">
+                <strong className="text-amber-900 font-extrabold block uppercase text-[10px]">
+                  Doctor Advice & Precautions (डॉक्टर की सलाह):
+                </strong>
+                <p className="text-amber-950 font-medium leading-relaxed">
+                  {selectedDocModal.extractedData.doctorAdvice}
+                </p>
               </div>
             )}
 

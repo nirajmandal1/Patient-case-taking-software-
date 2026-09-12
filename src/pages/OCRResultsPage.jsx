@@ -471,6 +471,33 @@ export const OCRResultsPage = () => {
               </ul>
             </div>
 
+            {/* Doctor Prescribed Medications */}
+            {doc.extractedData?.medications?.length > 0 && (
+              <div className="bg-blue-50/70 p-4 rounded-2xl border border-blue-200 space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="font-extrabold text-blue-900 uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                    💊 Prescribed Medicines (डॉक्टर द्वारा दी गई दवाइयाँ)
+                  </span>
+                  <span className="text-[10px] bg-blue-100 text-blue-800 font-black px-2 py-0.5 rounded-full">
+                    {doc.extractedData.medications.length} Meds
+                  </span>
+                </div>
+                <div className="space-y-1.5">
+                  {doc.extractedData.medications.map((m, i) => (
+                    <div key={i} className="bg-white p-2.5 rounded-xl border border-blue-100 flex justify-between items-center text-[11px] shadow-2xs">
+                      <div>
+                        <strong className="text-slate-900 block">{m.name} {m.dosage}</strong>
+                        <span className="text-[10px] text-slate-500">{m.frequency}</span>
+                      </div>
+                      <span className="text-[10px] bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded-lg">
+                        {m.duration}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Investigations */}
             {doc.extractedData?.investigations?.length > 0 && (
               <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
