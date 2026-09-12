@@ -945,9 +945,9 @@ export const DoctorDashboardPage = () => {
           {/* 2. PATIENT QUEUE VIEW: Live Consultation Desk & Rx Writer        */}
           {/* =============================================================== */}
           {sidebarItem === "queue" && (
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-4">
               {/* Left Column: Patient Queue Table */}
-              <div className="lg:col-span-3 bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+              <div className="xl:col-span-7 bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3.5 min-w-0">
                 <div className="flex flex-wrap justify-between items-center gap-3">
                   <div>
                     <h3 className="font-extrabold text-sm text-slate-900">Live OPD Patient Queue</h3>
@@ -995,18 +995,18 @@ export const DoctorDashboardPage = () => {
                 </div>
 
                 <div className="overflow-x-auto">
-                  <table className="w-full text-xs">
+                  <table className="w-full text-xs min-w-[560px]">
                     <thead>
-                      <tr className="border-b border-slate-200 text-left text-slate-500">
-                        <th className="pb-2.5 font-bold">Token</th>
-                        <th className="pb-2.5 font-bold">Patient Name</th>
-                        <th className="pb-2.5 font-bold">Age/Sex</th>
-                        <th className="pb-2.5 font-bold">Triage Priority</th>
-                        <th className="pb-2.5 font-bold">Consultation Status</th>
-                        <th className="pb-2.5 font-bold text-center">Case Sheet</th>
+                      <tr className="border-b border-slate-200 text-left text-slate-500 bg-slate-50/70">
+                        <th className="px-3 py-2.5 font-extrabold whitespace-nowrap rounded-l-xl w-16">Token</th>
+                        <th className="px-3 py-2.5 font-extrabold min-w-[130px]">Patient Name</th>
+                        <th className="px-3 py-2.5 font-extrabold whitespace-nowrap w-20">Age / Sex</th>
+                        <th className="px-3 py-2.5 font-extrabold whitespace-nowrap w-28">Triage Priority</th>
+                        <th className="px-3 py-2.5 font-extrabold whitespace-nowrap w-36">Consultation Status</th>
+                        <th className="px-3 py-2.5 font-extrabold whitespace-nowrap text-center rounded-r-xl w-24">Case Sheet</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="divide-y divide-slate-100">
                       {activeQueue
                         .filter((pt) => {
                           const matchesSearch =
@@ -1028,7 +1028,7 @@ export const DoctorDashboardPage = () => {
                                 setSelectedPatient(pt);
                                 setPatientData(pt);
                               }}
-                              className={`border-b border-slate-100 cursor-pointer transition ${
+                              className={`cursor-pointer transition ${
                                 isSelected
                                   ? "bg-blue-50/90 font-medium border-l-4 border-l-blue-600"
                                   : isCompleted
@@ -1038,69 +1038,74 @@ export const DoctorDashboardPage = () => {
                                   : "hover:bg-slate-50"
                               }`}
                             >
-                              <td className="py-3 font-mono font-bold text-slate-900 flex items-center gap-1.5 pl-2">
-                                {isCompleted ? (
-                                  <span className="w-2 h-2 rounded-full bg-emerald-500" title="Completed"></span>
-                                ) : isLiveNew ? (
-                                  <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                                ) : null}
-                                #{pt.token}
+                              <td className="px-3 py-3.5 whitespace-nowrap">
+                                <div className="flex items-center gap-1.5 font-mono font-bold text-slate-900">
+                                  {isCompleted ? (
+                                    <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" title="Completed"></span>
+                                  ) : isLiveNew ? (
+                                    <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse shrink-0"></span>
+                                  ) : null}
+                                  <span>#{pt.token}</span>
+                                </div>
                               </td>
-                              <td className="py-3">
-                                <span className="font-bold text-slate-800 flex items-center gap-1.5">
-                                  {pt.name}
+                              <td className="px-3 py-3.5">
+                                <div className="flex items-center gap-1.5 flex-wrap">
+                                  <span className="font-extrabold text-slate-800 text-xs">
+                                    {pt.name}
+                                  </span>
                                   {isCompleted && (
-                                    <span className="text-[10px] text-emerald-700 font-extrabold bg-emerald-100 border border-emerald-300 px-1.5 py-0.2 rounded inline-flex items-center gap-0.5">
+                                    <span className="text-[10px] text-emerald-700 font-extrabold bg-emerald-100 border border-emerald-300 px-1.5 py-0.2 rounded inline-flex items-center gap-0.5 whitespace-nowrap">
                                       <Check size={10} strokeWidth={3} /> Done
                                     </span>
                                   )}
-                                </span>
-                                {isLiveNew && !isCompleted && (
-                                  <span className="text-[10px] text-emerald-700 font-extrabold">
-                                    Just Arrived from Kiosk
-                                  </span>
-                                )}
+                                  {isLiveNew && !isCompleted && (
+                                    <span className="text-[10px] text-blue-700 font-bold bg-blue-50 border border-blue-200 px-1.5 py-0.2 rounded whitespace-nowrap">
+                                      Live Intake
+                                    </span>
+                                  )}
+                                </div>
                               </td>
-                              <td className="py-3 text-slate-600">
+                              <td className="px-3 py-3.5 text-slate-600 whitespace-nowrap font-medium text-xs">
                                 {pt.age}Y / {pt.gender?.[0] || "M"}
                               </td>
-                              <td className="py-3">
+                              <td className="px-3 py-3.5 whitespace-nowrap">
                                 {pt.priority === "High Priority" || pt.priority === "High" ? (
-                                  <span className="bg-red-100 text-red-700 font-extrabold px-2 py-0.5 rounded-full text-[10px] inline-flex items-center gap-1">
-                                    <AlertTriangle size={10} /> High Priority
+                                  <span className="bg-red-100 text-red-700 font-extrabold px-2.5 py-0.5 rounded-full text-[10px] inline-flex items-center gap-1 whitespace-nowrap border border-red-200">
+                                    <AlertTriangle size={10} className="shrink-0" /> High Priority
                                   </span>
                                 ) : (
-                                  <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full text-[10px]">
+                                  <span className="bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded-full text-[10px] whitespace-nowrap">
                                     Standard
                                   </span>
                                 )}
                               </td>
-                              <td className="py-3">
+                              <td className="px-3 py-3.5 whitespace-nowrap">
                                 {isCompleted ? (
                                   <button
-                                    onClick={(e) => handleToggleConsultationStatus(pt.token, e)}
-                                    className="text-emerald-800 font-black bg-emerald-100 hover:bg-emerald-200 border border-emerald-300 px-2.5 py-1 rounded-lg text-[10px] inline-flex items-center gap-1 shadow-2xs transition cursor-pointer"
+                                    onClick={(e) => handleToggleConsultationStatus(pt.token, e, "incomplete")}
+                                    className="text-emerald-800 font-extrabold bg-emerald-100 hover:bg-emerald-200 border border-emerald-300 px-2.5 py-1 rounded-lg text-[10px] inline-flex items-center gap-1 shadow-2xs transition cursor-pointer whitespace-nowrap"
                                     title="Click to toggle back to incomplete"
                                   >
-                                    <CheckCircle2 size={12} className="text-emerald-600" /> Completed ✓
+                                    <CheckCircle2 size={12} className="text-emerald-600 shrink-0" />
+                                    <span>Completed ✓</span>
                                   </button>
                                 ) : (
                                   <button
-                                    onClick={(e) => handleToggleConsultationStatus(pt.token, e)}
-                                    className="text-amber-800 font-bold bg-amber-50 hover:bg-emerald-600 hover:text-white border border-amber-300 hover:border-emerald-600 px-2.5 py-1 rounded-lg text-[10px] inline-flex items-center gap-1 transition cursor-pointer group shadow-2xs"
-                                    title="Click right here to mark consultation as complete"
+                                    onClick={(e) => handleToggleConsultationStatus(pt.token, e, "completed")}
+                                    className="text-amber-800 font-bold bg-amber-50 hover:bg-emerald-600 hover:text-white border border-amber-300 hover:border-emerald-600 px-2.5 py-1 rounded-lg text-[10px] inline-flex items-center gap-1 transition cursor-pointer group shadow-2xs whitespace-nowrap"
+                                    title="Click to mark consultation as complete"
                                   >
-                                    <Clock size={11} className="text-amber-600 group-hover:hidden" />
-                                    <Check size={11} className="hidden group-hover:inline text-white" />
+                                    <Clock size={11} className="text-amber-600 group-hover:hidden shrink-0" />
+                                    <Check size={11} className="hidden group-hover:inline text-white shrink-0" />
                                     <span className="group-hover:hidden">⏳ Incomplete</span>
                                     <span className="hidden group-hover:inline font-black">Mark Complete ✓</span>
                                   </button>
                                 )}
                               </td>
-                              <td className="py-3 text-center">
+                              <td className="px-3 py-3.5 text-center whitespace-nowrap">
                                 <button
                                   onClick={(e) => handleOpenPatientPDF(pt, e)}
-                                  className="inline-flex items-center gap-1 bg-blue-50 hover:bg-blue-600 hover:text-white text-blue-700 border border-blue-200 px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer"
+                                  className="inline-flex items-center gap-1 bg-blue-50 hover:bg-blue-600 hover:text-white text-blue-700 border border-blue-200 px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer whitespace-nowrap shadow-2xs"
                                   title="View Patient Case Sheet PDF in browser"
                                 >
                                   <Eye size={12} />
@@ -1116,11 +1121,46 @@ export const DoctorDashboardPage = () => {
               </div>
 
               {/* Right Column: Patient Summary & Rx Panel */}
-              <div className="lg:col-span-2 bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-                {/* Header with Tokens & PDF Download */}
-                <div className="flex justify-between items-start border-b border-slate-100 pb-3">
+              <div className="xl:col-span-5 bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3.5 min-w-0">
+                {/* Header with Tokens, ABHA & PDF Buttons */}
+                <div className="border-b border-slate-100 pb-3 space-y-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-mono text-xs font-black bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-lg whitespace-nowrap">
+                        TOKEN #{selectedPatient.token}
+                      </span>
+                      {isPatientCompleted(selectedPatient) ? (
+                        <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full flex items-center gap-1 whitespace-nowrap">
+                          <CheckCircle2 size={11} className="text-emerald-600" /> Completed
+                        </span>
+                      ) : (
+                        <span className="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full flex items-center gap-1 whitespace-nowrap">
+                          <Clock size={11} className="text-amber-600" /> Incomplete
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <button
+                        onClick={() => handleOpenPatientPDF(selectedPatient)}
+                        title="View Case Sheet PDF directly in browser"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 text-xs shadow-xs whitespace-nowrap"
+                      >
+                        <Eye size={13} /> View PDF ↗
+                      </button>
+                      <button
+                        onClick={() => handleDownloadPDF(selectedPatient)}
+                        title="Download Case Sheet PDF"
+                        className="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 p-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 text-xs font-bold shrink-0"
+                      >
+                        <Download size={15} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Patient Name & Edit */}
                   {isEditingPatient ? (
-                    <div className="space-y-2 flex-1 mr-3">
+                    <div className="space-y-2 pt-1">
                       <div className="flex gap-2">
                         <input
                           type="text"
@@ -1164,22 +1204,7 @@ export const DoctorDashboardPage = () => {
                   ) : (
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-black bg-blue-100 text-blue-800 px-2 py-0.5 rounded">
-                          TOKEN #{selectedPatient.token}
-                        </span>
-                        <span className="text-[10px] text-slate-400">ABHA: {selectedPatient.abhaId}</span>
-                        {isPatientCompleted(selectedPatient) ? (
-                          <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1">
-                            <CheckCircle2 size={11} className="text-emerald-600" /> Completed
-                          </span>
-                        ) : (
-                          <span className="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-                            <Clock size={11} className="text-amber-600" /> Incomplete
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2 mt-1">
-                        <h3 className="font-black text-xl text-slate-900">{selectedPatient.name}</h3>
+                        <h3 className="font-black text-xl text-slate-900 leading-tight">{selectedPatient.name}</h3>
                         <button
                           onClick={() => {
                             setEditName(selectedPatient.name);
@@ -1187,65 +1212,62 @@ export const DoctorDashboardPage = () => {
                             setEditGender(selectedPatient.gender || "Male");
                             setIsEditingPatient(true);
                           }}
-                          className="text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 p-1 rounded-md text-[10px] font-bold flex items-center gap-0.5 transition cursor-pointer"
+                          className="text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 p-1 rounded-md text-[10px] font-bold flex items-center gap-0.5 transition cursor-pointer shrink-0"
                           title="Edit Patient Name & Age"
                         >
                           <Edit size={12} /> Edit
                         </button>
                       </div>
-                      <p className="text-xs text-slate-500">
-                        {selectedPatient.age} Y / {selectedPatient.gender} • Intake Lang: {selectedPatient.language || "Hindi"}
+                      <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-2 flex-wrap">
+                        <span>{selectedPatient.age} Y / {selectedPatient.gender}</span>
+                        <span>•</span>
+                        <span className="font-mono text-[11px] text-slate-600 font-semibold bg-slate-100 px-1.5 py-0.2 rounded">
+                          ABHA: {selectedPatient.abhaId}
+                        </span>
+                        <span>•</span>
+                        <span>Lang: {selectedPatient.language || "Hindi"}</span>
                       </p>
                     </div>
                   )}
-
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    <button
-                      onClick={() => handleOpenPatientPDF(selectedPatient)}
-                      title="View Case Sheet PDF directly in browser"
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 text-xs shadow-sm"
-                    >
-                      <Eye size={13} /> View PDF ↗
-                    </button>
-                    <button
-                      onClick={() => handleDownloadPDF(selectedPatient)}
-                      title="Download Case Sheet PDF"
-                      className="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 p-1.5 rounded-xl transition cursor-pointer flex items-center gap-1 text-xs font-bold"
-                    >
-                      <Download size={15} />
-                    </button>
-                  </div>
                 </div>
 
                 {/* Consultation Status Banner */}
                 {isPatientCompleted(selectedPatient) ? (
-                  <div className="bg-emerald-50 border border-emerald-300 p-3 rounded-2xl flex items-center justify-between text-xs shadow-2xs">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 size={20} className="text-emerald-600 shrink-0" />
-                      <div>
-                        <span className="font-black text-emerald-950 block text-xs">CONSULTATION COMPLETED ✓</span>
-                        <span className="text-[10px] text-emerald-700">Patient case verified & marked complete</span>
+                  <div className="bg-emerald-50 border border-emerald-300 p-3 rounded-2xl flex items-center justify-between text-xs shadow-2xs gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <CheckCircle2 size={18} className="text-emerald-600 shrink-0" />
+                      <div className="min-w-0">
+                        <span className="font-black text-emerald-950 block text-xs whitespace-nowrap">
+                          CONSULTATION COMPLETED ✓
+                        </span>
+                        <span className="text-[10px] text-emerald-700 truncate block">
+                          Patient case verified & marked complete
+                        </span>
                       </div>
                     </div>
                     <button
                       onClick={() => handleToggleConsultationStatus(selectedPatient.token, null, "incomplete")}
-                      className="bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-1 rounded-lg text-[10px] font-bold transition cursor-pointer"
+                      className="bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 px-3 py-1 rounded-lg text-[10px] font-bold transition cursor-pointer whitespace-nowrap shrink-0 shadow-2xs"
                     >
                       Undo / Re-open
                     </button>
                   </div>
                 ) : (
-                  <div className="bg-amber-50 border border-amber-300 p-3 rounded-2xl flex items-center justify-between text-xs shadow-2xs">
-                    <div className="flex items-center gap-2">
+                  <div className="bg-amber-50 border border-amber-300 p-3 rounded-2xl flex items-center justify-between text-xs shadow-2xs gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
                       <Clock size={18} className="text-amber-600 shrink-0" />
-                      <div>
-                        <span className="font-extrabold text-amber-950 block text-xs">Consultation In Progress ⏳</span>
-                        <span className="text-[10px] text-amber-700">Mark as complete after reviewing case</span>
+                      <div className="min-w-0">
+                        <span className="font-extrabold text-amber-950 block text-xs whitespace-nowrap">
+                          Consultation In Progress ⏳
+                        </span>
+                        <span className="text-[10px] text-amber-700 truncate block">
+                          Mark as complete after reviewing case
+                        </span>
                       </div>
                     </div>
                     <button
                       onClick={() => handleToggleConsultationStatus(selectedPatient.token, null, "completed")}
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1 shadow-xs"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1 shadow-xs whitespace-nowrap shrink-0"
                     >
                       <Check size={12} /> Mark Complete ✓
                     </button>
