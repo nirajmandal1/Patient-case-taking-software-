@@ -1,4 +1,5 @@
-import { jsPDF } from "jspdf";
+﻿import { jsPDF } from "jspdf";
+import { cleanTextForPDF } from "./textCleaner";
 
 export const generatePatientPDF = (patientData, conversation = []) => {
   const doc = new jsPDF({
@@ -42,7 +43,7 @@ export const generatePatientPDF = (patientData, conversation = []) => {
   doc.text("OPD TOKEN", 172, 8);
   doc.setFontSize(13);
   doc.setTextColor(...darkColor);
-  doc.text(`#${patientData.token || "105"}`, 174, 15);
+  doc.text(`#${cleanTextForPDF(patientData.token || "105")}`, 174, 15);
 
   let y = 30;
 
@@ -54,14 +55,15 @@ export const generatePatientPDF = (patientData, conversation = []) => {
   doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
   doc.setTextColor(...darkColor);
-  doc.text(`Patient: ${patientData.name || "Patient"}`, 18, y + 7);
+  const patientNameClean = cleanTextForPDF(patientData.name || "Patient");
+  doc.text(`Patient: ${patientNameClean}`, 18, y + 7);
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(9);
   doc.setTextColor(...grayColor);
-  doc.text(`Age/Sex: ${patientData.age || "45"} Y / ${patientData.gender || "M"}`, 18, y + 14);
+  doc.text(`Age/Sex: ${patientData.age || "45"} Y / ${cleanTextForPDF(patientData.gender || "M")}`, 18, y + 14);
   doc.text(`ABHA ID: ${patientData.abhaId || "91-4829-1029-4821"}`, 85, y + 14);
-  doc.text(`Language: ${patientData.language || "Hindi"}`, 150, y + 14);
+  doc.text(`Language: ${cleanTextForPDF(patientData.language || "Hindi")}`, 150, y + 14);
 
   // Priority Badge
   const isHigh = patientData.priority === "High Priority" || patientData.priority === "High";
@@ -90,8 +92,9 @@ export const generatePatientPDF = (patientData, conversation = []) => {
   doc.setFont("helvetica", "bold");
   doc.setFontSize(9);
   doc.setTextColor(...darkColor);
-  const complaint = patientData.chiefComplaint || "General malaise and consultation request.";
-  doc.text(complaint.substring(0, 95), 18, y + 7);
+  const rawComplaint = patientData.chiefComplaint || "General malaise and consultation request.";
+  const cleanComplaint = cleanTextForPDF(rawComplaint);
+  doc.text(cleanComplaint.substring(0, 95), 18, y + 7);
 
   y += 18;
 
@@ -102,11 +105,12 @@ export const generatePatientPDF = (patientData, conversation = []) => {
   doc.text("2. HISTORY OF PRESENT ILLNESS (HPI)", 14, y);
   y += 4;
 
-  const hpiText =
+  const rawHpi =
     patientData.caseData?.hpi ||
     patientData.hpi ||
     "Patient presented at intake kiosk reporting symptoms. Clinical interview conducted in patient's preferred language.";
-  const splitHpi = doc.splitTextToSize(hpiText, 174);
+  const cleanHpi = cleanTextForPDF(rawHpi);
+  const splitHpi = doc.splitTextToSize(cleanHpi, 174);
   const hpiHeight = Math.max(16, splitHpi.length * 5 + 6);
 
   doc.setFillColor(255, 255, 255);
@@ -135,7 +139,8 @@ export const generatePatientPDF = (patientData, conversation = []) => {
   doc.setTextColor(...darkColor);
   doc.text("Past History:", 18, y + 6);
   doc.setFont("helvetica", "normal");
-  doc.text(patientData.caseData?.pastHistory || "Hypertension (diagnosed 2 yrs ago), No reported diabetes.", 42, y + 6);
+  const rawPast = patientData.caseData?.pastHistory || "Hypertension (diagnosed 2 yrs ago), No reported diabetes.";
+  doc.text(cleanTextForPDF(rawPast), 42, y + 6);
 
   doc.setFont("helvetica", "bold");
   doc.text("Medications:", 18, y + 12);
@@ -143,7 +148,7 @@ export const generatePatientPDF = (patientData, conversation = []) => {
   const meds = Array.isArray(patientData.caseData?.currentMeds)
     ? patientData.caseData.currentMeds.join(", ")
     : "Tab. Amlodipine 5mg OD";
-  doc.text(meds, 42, y + 12);
+  doc.text(cleanTextForPDF(meds), 42, y + 12);
 
   doc.setFont("helvetica", "bold");
   doc.text("Allergies:", 18, y + 18);
@@ -152,7 +157,7 @@ export const generatePatientPDF = (patientData, conversation = []) => {
   const allergies = Array.isArray(patientData.caseData?.allergies)
     ? patientData.caseData.allergies.join(", ")
     : "No known drug allergies (NKDA)";
-  doc.text(allergies, 42, y + 18);
+  doc.text(cleanTextForPDF(allergies), 42, y + 18);
 
   y += 30;
 
@@ -183,8 +188,9 @@ export const generatePatientPDF = (patientData, conversation = []) => {
       }
       doc.setFont("helvetica", "normal");
       doc.setTextColor(...darkColor);
-      const snippet = msg.text ? msg.text.replace(/\n/g, " ").substring(0, 80) : "...";
-      doc.text(snippet, 32, msgY);
+      const rawSnippet = msg.text ? msg.text.replace(/\n/g, " ") : "...";
+      const cleanSnippet = cleanTextForPDF(rawSnippet).substring(0, 85);
+      doc.text(cleanSnippet, 32, msgY);
       msgY += 6;
     });
   } else {
