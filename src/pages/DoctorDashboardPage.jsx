@@ -243,28 +243,8 @@ export const DoctorDashboardPage = () => {
     { id: "settings", label: "Settings", icon: Settings, badge: null }
   ];
 
-  // Base Completed patients for History
+  // Base Completed patients for History (18 completed consultations with full data)
   const baseCompletedPatients = [
-    {
-      token: "098",
-      name: "Harish Chandra",
-      age: 52,
-      gender: "Male",
-      time: "09:15 AM",
-      diagnosis: "Viral Upper Respiratory Infection",
-      rx: "Tab. Paracetamol 650mg, Tab. Cetirizine 10mg, Steam inhalation",
-      status: "Completed"
-    },
-    {
-      token: "099",
-      name: "Meena Kumari",
-      age: 44,
-      gender: "Female",
-      time: "09:32 AM",
-      diagnosis: "Type 2 Diabetes Routine Review",
-      rx: "Tab. Metformin 500mg BD, Diet control advised",
-      status: "Completed"
-    },
     {
       token: "100",
       name: "Sanjay Dixit",
@@ -272,8 +252,304 @@ export const DoctorDashboardPage = () => {
       gender: "Male",
       time: "09:50 AM",
       diagnosis: "Acute Gastritis & Acid Reflux",
-      rx: "Cap. Pantoprazole 40mg OD before breakfast x 14 days",
-      status: "Completed"
+      rx: "Cap. Pantoprazole 40mg OD before breakfast x 14 days, Syr. Digene 10ml TDS",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Severe burning in epigastrium and acid regurgitation",
+        pastHistory: "Occasional dyspepsia, heavy tea consumption",
+        currentMeds: ["Cap. Pantoprazole 40mg OD", "Syr. Digene 10ml TDS"],
+        allergies: ["None"],
+        familyHistory: "No significant history"
+      }
+    },
+    {
+      token: "099",
+      name: "Meena Kumari",
+      age: 44,
+      gender: "Female",
+      time: "09:35 AM",
+      diagnosis: "Type 2 Diabetes Mellitus Routine Review",
+      rx: "Tab. Metformin 500mg BD after meals, Dietary lifestyle counseling",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Routine 3-month follow-up for diabetes blood sugar check",
+        pastHistory: "T2DM x 5 years",
+        currentMeds: ["Tab. Metformin 500mg BD", "Tab. Atorvastatin 10mg HS"],
+        allergies: ["None"],
+        familyHistory: "Mother diabetic"
+      }
+    },
+    {
+      token: "098",
+      name: "Harish Chandra",
+      age: 52,
+      gender: "Male",
+      time: "09:20 AM",
+      diagnosis: "Viral Upper Respiratory Tract Infection",
+      rx: "Tab. Paracetamol 650mg TDS x 3d, Tab. Cetirizine 10mg HS x 5d, Steam inhalation",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Fever, running nose and sore throat since 2 days",
+        pastHistory: "Hypertension on Telmisartan 40mg",
+        currentMeds: ["Tab. Telmisartan 40mg OD", "Tab. Paracetamol 650mg"],
+        allergies: ["Sulpha drugs"],
+        familyHistory: "Father had CAD"
+      }
+    },
+    {
+      token: "097",
+      name: "Sunita Agarwal",
+      age: 49,
+      gender: "Female",
+      time: "09:05 AM",
+      diagnosis: "Essential Hypertension (Stage 1)",
+      rx: "Tab. Telmisartan 40mg OD morning, Low sodium diet, BP log chart",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Mild occipital headache and morning heaviness",
+        pastHistory: "New onset high BP (148/92 mmHg)",
+        currentMeds: ["Tab. Telmisartan 40mg OD"],
+        allergies: ["None"],
+        familyHistory: "Hypertensive parents"
+      }
+    },
+    {
+      token: "096",
+      name: "Vikram Malhotra",
+      age: 34,
+      gender: "Male",
+      time: "08:52 AM",
+      diagnosis: "Acute Lumbar Muscle Strain",
+      rx: "Tab. Aceclofenac + Paracetamol BD x 5d, Tab. Thiocolchicoside 4mg BD, Hot compress",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Lower back pain after lifting luggage yesterday",
+        pastHistory: "No prior spine issue",
+        currentMeds: ["Tab. Aceclofenac 100mg + Paracetamol 325mg"],
+        allergies: ["None"],
+        familyHistory: "Unremarkable"
+      }
+    },
+    {
+      token: "095",
+      name: "Kavita Joshi",
+      age: 28,
+      gender: "Female",
+      time: "08:40 AM",
+      diagnosis: "Iron Deficiency Anemia",
+      rx: "Tab. Ferrous Ascorbate + Folic Acid OD after dinner x 2 months, High iron diet",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Easy fatigue, pale conjunctiva, lethargy for 1 month",
+        pastHistory: "Heavy menstrual bleeding",
+        currentMeds: ["Tab. Ferrous Ascorbate 100mg OD"],
+        allergies: ["None"],
+        familyHistory: "No history"
+      }
+    },
+    {
+      token: "094",
+      name: "Rajeshwar Pandey",
+      age: 63,
+      gender: "Male",
+      time: "08:30 AM",
+      diagnosis: "Bilateral Knee Osteoarthritis (Grade 2)",
+      rx: "Tab. Glucosamine + Chondroitin OD, Paracetamol 650mg SOS for joint pain, Physiotherapy",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Knee pain worse on climbing stairs and morning stiffness",
+        pastHistory: "Osteoarthritis x 3 years",
+        currentMeds: ["Tab. Calcium + Vit D3 OD", "Paracetamol SOS"],
+        allergies: ["None"],
+        familyHistory: "Mother had joint arthritis"
+      }
+    },
+    {
+      token: "093",
+      name: "Anita Mukherjee",
+      age: 36,
+      gender: "Female",
+      time: "08:18 AM",
+      diagnosis: "Primary Tension Headache",
+      rx: "Tab. Naproxen 250mg SOS, Sleep hygiene counseling, Stress reduction",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Band-like dull headache in frontal region after screen work",
+        pastHistory: "Recurrent stress headaches",
+        currentMeds: ["Tab. Naproxen 250mg SOS"],
+        allergies: ["Aspirin"],
+        familyHistory: "None"
+      }
+    },
+    {
+      token: "092",
+      name: "Mohan Lal Gupta",
+      age: 58,
+      gender: "Male",
+      time: "08:05 AM",
+      diagnosis: "Dyslipidemia & Fatty Liver (Grade 1)",
+      rx: "Tab. Rosuvastatin 10mg HS, Liver function follow-up in 6 weeks, 45 min brisk walk",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Routine executive health review, elevated total cholesterol 242 mg/dL",
+        pastHistory: "Sedentary lifestyle",
+        currentMeds: ["Tab. Rosuvastatin 10mg HS"],
+        allergies: ["None"],
+        familyHistory: "Brother had premature CAD"
+      }
+    },
+    {
+      token: "091",
+      name: "Pooja Verma",
+      age: 24,
+      gender: "Female",
+      time: "07:55 AM",
+      diagnosis: "Acute Bacterial Pharyngitis",
+      rx: "Tab. Amoxicillin-Clavulanate 625mg BD x 5d, Warm salt gargles, Paracetamol 650mg BD",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Severe throat pain with difficulty swallowing for 2 days",
+        pastHistory: "Recurrent tonsillitis in childhood",
+        currentMeds: ["Tab. Augmentin 625mg BD", "Tab. Paracetamol 650mg"],
+        allergies: ["None"],
+        familyHistory: "None"
+      }
+    },
+    {
+      token: "090",
+      name: "Deepak Choudhary",
+      age: 41,
+      gender: "Male",
+      time: "07:44 AM",
+      diagnosis: "Allergic Rhinitis & Sinus Congestion",
+      rx: "Nasal Fluticasone Spray 2 puffs OD x 14d, Tab. Bilastine 20mg OD HS",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Sneezing attacks, nasal blockage and itchy eyes every morning",
+        pastHistory: "Seasonal allergy x 6 years",
+        currentMeds: ["Fluticasone nasal spray", "Tab. Bilastine 20mg OD"],
+        allergies: ["Dust mite, pollen"],
+        familyHistory: "Father had bronchial asthma"
+      }
+    },
+    {
+      token: "089",
+      name: "Shanti Devi",
+      age: 67,
+      gender: "Female",
+      time: "07:35 AM",
+      diagnosis: "Primary Hypothyroidism Routine Follow-up",
+      rx: "Tab. Levothyroxine 75mcg OD empty stomach 30 min before tea, Serum TSH in 2 months",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Thyroid medication dose titration, reports mild constipation",
+        pastHistory: "Hypothyroidism x 8 years (TSH 5.8 mIU/L)",
+        currentMeds: ["Tab. Thyronorm 75mcg OD"],
+        allergies: ["None"],
+        familyHistory: "Daughter has thyroid disorder"
+      }
+    },
+    {
+      token: "088",
+      name: "Amitabh Sen",
+      age: 46,
+      gender: "Male",
+      time: "07:22 AM",
+      diagnosis: "Mild Bronchial Asthma Exacerbation",
+      rx: "Inhaler Budesonide + Formoterol 200/6 2 puffs BD with spacer, Tab. Montelukast 10mg HS",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Nocturnal dry cough and mild wheezing past 3 nights",
+        pastHistory: "Bronchial asthma diagnosed in 2018",
+        currentMeds: ["Foracort 200 Inhaler BD", "Tab. Montelukast 10mg HS"],
+        allergies: ["Cold air, pet dander"],
+        familyHistory: "Mother had allergic bronchitis"
+      }
+    },
+    {
+      token: "087",
+      name: "Rekha Sharma",
+      age: 33,
+      gender: "Female",
+      time: "07:12 AM",
+      diagnosis: "Acute Uncomplicated Cystitis (UTI)",
+      rx: "Tab. Nitrofurantoin 100mg BD x 5d, Syr. Potassium Citrate 15ml TDS in water, High fluid intake",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Burning micturition, increased urinary frequency since yesterday",
+        pastHistory: "No prior kidney stone",
+        currentMeds: ["Tab. Nitrofurantoin 100mg BD"],
+        allergies: ["Ciprofloxacin"],
+        familyHistory: "Unremarkable"
+      }
+    },
+    {
+      token: "086",
+      name: "Gopal Krishna",
+      age: 55,
+      gender: "Male",
+      time: "07:02 AM",
+      diagnosis: "Chronic Plaque Psoriasis",
+      rx: "Clobetasol + Salicylic acid ointment topically BD, Calcipotriol cream OD, Emollient moisturizers",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Silvery scaly red patches over bilateral elbows and extensor knees",
+        pastHistory: "Psoriasis vulgaris x 7 years",
+        currentMeds: ["Topical steroid ointment", "Liquid paraffin moisturizer"],
+        allergies: ["None"],
+        familyHistory: "Paternal uncle had psoriasis"
+      }
+    },
+    {
+      token: "085",
+      name: "Manju Singhal",
+      age: 51,
+      gender: "Female",
+      time: "06:50 AM",
+      diagnosis: "Post-Viral Asthenia & Myalgia",
+      rx: "Tab. Multivitamin with Methylcobalamin OD x 30d, Adequate hydration and protein intake",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Generalized weakness and calf muscle ache following viral fever last week",
+        pastHistory: "Recent episode of dengue (recovered, platelets 2.1 lakh)",
+        currentMeds: ["Multivitamin capsules OD"],
+        allergies: ["None"],
+        familyHistory: "None"
+      }
+    },
+    {
+      token: "084",
+      name: "Naresh Yadav",
+      age: 38,
+      gender: "Male",
+      time: "06:40 AM",
+      diagnosis: "Mild Conjunctivitis (Bacterial)",
+      rx: "Moxifloxacin 0.5% Eye Drops 1 drop 4 times daily x 5d, Cold eye compress, Hand hygiene",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Redness, grittiness and mild yellow discharge in right eye since morning",
+        pastHistory: "No visual acuity reduction",
+        currentMeds: ["Moxifloxacin eye drops"],
+        allergies: ["None"],
+        familyHistory: "None"
+      }
+    },
+    {
+      token: "083",
+      name: "Bimla Devi",
+      age: 72,
+      gender: "Female",
+      time: "06:30 AM",
+      diagnosis: "Senile Osteopenia & Vitamin D Deficiency",
+      rx: "Sachet Cholecalciferol 60,000 IU once weekly x 8 weeks with milk, Tab. Calcium Carbonate 500mg OD",
+      status: "Completed",
+      caseData: {
+        chiefComplaint: "Generalized body aches and bone pain, low Vitamin D (11 ng/mL)",
+        pastHistory: "Post-menopausal osteoporosis",
+        currentMeds: ["Cholecalciferol 60k sachet weekly", "Tab. Shelcal 500mg OD"],
+        allergies: ["None"],
+        familyHistory: "No fracture history"
+      }
     }
   ];
 
@@ -394,7 +670,7 @@ export const DoctorDashboardPage = () => {
               </div>
               <div className="bg-emerald-50/80 border border-emerald-200/80 p-2.5 rounded-2xl text-center min-w-[75px]">
                 <span className="text-xl font-black text-emerald-700">
-                  {18 + activeQueue.filter((p) => p.consultationStatus === "completed").length}
+                  {allCompletedPatients.length}
                 </span>
                 <br />
                 <span className="text-slate-500 text-[10px] font-bold">Completed</span>
@@ -1076,39 +1352,60 @@ export const DoctorDashboardPage = () => {
                 </div>
               </div>
 
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto rounded-2xl border border-slate-200">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="border-b border-slate-200 text-left text-slate-500">
-                      <th className="pb-3 font-bold">Token</th>
-                      <th className="pb-3 font-bold">Patient Name</th>
-                      <th className="pb-3 font-bold">Age / Gender</th>
-                      <th className="pb-3 font-bold">Consultation Time</th>
-                      <th className="pb-3 font-bold">Diagnosis / Assessment</th>
-                      <th className="pb-3 font-bold">Prescription Advice</th>
-                      <th className="pb-3 font-bold text-right">Actions</th>
+                    <tr className="bg-slate-50 border-b border-slate-200 text-left text-slate-500">
+                      <th className="py-3 px-3.5 font-bold w-24">Token</th>
+                      <th className="py-3 px-3.5 font-bold">Patient Name</th>
+                      <th className="py-3 px-3.5 font-bold">Age / Gender</th>
+                      <th className="py-3 px-3.5 font-bold">Consultation Time</th>
+                      <th className="py-3 px-3.5 font-bold">Diagnosis / Assessment</th>
+                      <th className="py-3 px-3.5 font-bold">Prescription Advice</th>
+                      <th className="py-3 px-3.5 font-bold text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-slate-100 bg-white">
                     {filteredHistory.map((item) => (
                       <tr key={item.token} className="hover:bg-slate-50 transition">
-                        <td className="py-3 font-mono font-bold text-slate-900">#{item.token}</td>
-                        <td className="py-3 font-extrabold text-slate-800">{item.name}</td>
-                        <td className="py-3 text-slate-600">{item.age} Y / {item.gender}</td>
-                        <td className="py-3 text-slate-500">{item.time} Today</td>
-                        <td className="py-3 font-semibold text-blue-900">{item.diagnosis}</td>
-                        <td className="py-3 text-slate-600 max-w-xs truncate">{item.rx}</td>
-                        <td className="py-3 text-right">
+                        <td className="py-3.5 px-3.5 font-mono font-bold text-slate-900 whitespace-nowrap">
+                          <span className="bg-slate-100 border border-slate-200 px-2 py-0.5 rounded text-slate-700 font-extrabold">
+                            #{item.token}
+                          </span>
+                        </td>
+                        <td className="py-3.5 px-3.5 font-extrabold text-slate-800 whitespace-nowrap">
+                          {item.name}
+                        </td>
+                        <td className="py-3.5 px-3.5 text-slate-600 whitespace-nowrap">
+                          {item.age} Y / {item.gender}
+                        </td>
+                        <td className="py-3.5 px-3.5 text-slate-500 whitespace-nowrap">
+                          {item.time} Today
+                        </td>
+                        <td className="py-3.5 px-3.5 font-semibold text-blue-900 max-w-xs">
+                          {item.diagnosis}
+                        </td>
+                        <td className="py-3.5 px-3.5 text-slate-600 max-w-xs truncate" title={item.rx}>
+                          {item.rx}
+                        </td>
+                        <td className="py-3.5 px-3.5 text-right whitespace-nowrap">
                           <div className="flex items-center justify-end gap-1.5">
                             <button
                               onClick={() => {
-                                const pt = item.patientObj || activeQueue.find((p) => p.token === item.token) || selectedPatient;
+                                const pt = item.patientObj || activeQueue.find((p) => p.token === item.token) || {
+                                  token: item.token,
+                                  name: item.name,
+                                  age: item.age,
+                                  gender: item.gender,
+                                  chiefComplaint: item.diagnosis,
+                                  caseData: item.caseData || { pastHistory: "Normal", currentMeds: [item.rx], allergies: ["None"] }
+                                };
                                 handleOpenPatientPDF(pt);
                               }}
-                              className="bg-blue-50 hover:bg-blue-600 hover:text-white text-blue-700 font-bold px-2.5 py-1 rounded-lg text-xs transition cursor-pointer flex items-center gap-1"
-                              title="View PDF"
+                              className="bg-blue-50 hover:bg-blue-600 hover:text-white text-blue-700 font-extrabold px-2.5 py-1 rounded-lg text-xs transition cursor-pointer flex items-center gap-1 shadow-2xs"
+                              title="View Patient OPD Case Sheet PDF in browser"
                             >
-                              <Eye size={12} /> PDF ↗
+                              <Eye size={12} /> View PDF ↗
                             </button>
                             <button
                               onClick={() => setSelectedHistoryModal(item)}
@@ -1488,7 +1785,23 @@ export const DoctorDashboardPage = () => {
               <p><strong>Status:</strong> <span className="text-emerald-700 font-bold">✓ Consultation Completed</span></p>
             </div>
 
-            <div className="flex justify-end gap-2 pt-2 border-t">
+            <div className="flex flex-wrap justify-end gap-2 pt-3 border-t">
+              <button
+                onClick={() => {
+                  const pt = selectedHistoryModal.patientObj || activeQueue.find((p) => p.token === selectedHistoryModal.token) || {
+                    token: selectedHistoryModal.token,
+                    name: selectedHistoryModal.name,
+                    age: selectedHistoryModal.age,
+                    gender: selectedHistoryModal.gender,
+                    chiefComplaint: selectedHistoryModal.diagnosis,
+                    caseData: selectedHistoryModal.caseData || { pastHistory: "Normal", currentMeds: [selectedHistoryModal.rx], allergies: ["None"] }
+                  };
+                  handleOpenPatientPDF(pt);
+                }}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 cursor-pointer shadow-sm"
+              >
+                <Eye size={13} /> View OPD Case Sheet PDF ↗
+              </button>
               <button
                 onClick={() => window.print()}
                 className="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer"
@@ -1497,7 +1810,7 @@ export const DoctorDashboardPage = () => {
               </button>
               <button
                 onClick={() => setSelectedHistoryModal(null)}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold px-5 py-2 rounded-xl text-xs cursor-pointer"
+                className="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer"
               >
                 Close
               </button>
