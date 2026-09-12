@@ -229,12 +229,14 @@ export const DemoProvider = ({ children }) => {
     const rawPatient = patientToSubmit || patientData;
     const patient = {
       ...rawPatient,
-      consultationStatus: rawPatient.consultationStatus || "incomplete"
+      token: String(rawPatient.token),
+      consultationStatus: rawPatient.consultationStatus || "incomplete",
+      status: rawPatient.status || "waiting"
     };
 
     // 1. Update local queue immediately
     setActiveQueue((prev) => {
-      const filtered = prev.filter((p) => p.token !== patient.token);
+      const filtered = (prev || []).filter((p) => String(p.token).trim() !== String(patient.token).trim());
       return [patient, ...filtered];
     });
     setPatientData(patient);

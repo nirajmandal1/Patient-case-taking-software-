@@ -130,7 +130,8 @@
       "status": "completed",
       "doctorNotes": "Consultation completed. Rx provided.",
       "completedAt": "2026-09-12T05:47:37.378Z",
-      "updatedAt": "2026-09-12T05:28:41.425Z"
+      "updatedAt": "2026-09-12T05:28:41.425Z",
+      "consultationStatus": "completed"
     },
     {
       "token": "111",
@@ -202,7 +203,8 @@
       "createdAt": "2026-09-11T20:57:40.326Z",
       "status": "completed",
       "doctorNotes": "Consultation completed. Rx provided.",
-      "completedAt": "2026-09-11T21:00:43.664Z"
+      "completedAt": "2026-09-11T21:00:43.664Z",
+      "consultationStatus": "completed"
     },
     {
       "token": "110",
@@ -316,9 +318,10 @@
         }
       ],
       "createdAt": "2026-09-11T20:41:46.939Z",
-      "status": "waiting",
+      "status": "completed",
       "doctorNotes": "Consultation completed. Rx provided.",
-      "completedAt": "2026-09-11T18:47:22.319Z"
+      "completedAt": "2026-09-12T06:03:55.113Z",
+      "consultationStatus": "incomplete"
     },
     {
       "token": "109",
@@ -390,7 +393,8 @@
       "createdAt": "2026-09-11T19:56:42.656Z",
       "status": "waiting",
       "doctorNotes": "Consultation completed. Rx provided.",
-      "completedAt": "2026-09-11T18:47:22.319Z"
+      "completedAt": "2026-09-11T18:47:22.319Z",
+      "consultationStatus": "incomplete"
     },
     {
       "token": "108",
@@ -554,7 +558,8 @@
       "status": "completed",
       "doctorNotes": "Consultation completed. Rx provided.",
       "completedAt": "2026-09-12T05:44:13.026Z",
-      "updatedAt": "2026-09-11T19:43:23.652Z"
+      "updatedAt": "2026-09-11T19:43:23.652Z",
+      "consultationStatus": "completed"
     },
     {
       "token": "107",
@@ -670,7 +675,8 @@
       "createdAt": "2026-09-11T18:50:04.976Z",
       "status": "completed",
       "doctorNotes": "Consultation completed. Rx provided.",
-      "completedAt": "2026-09-11T18:50:16.982Z"
+      "completedAt": "2026-09-11T18:50:16.982Z",
+      "consultationStatus": "completed"
     },
     {
       "token": "106",
@@ -797,7 +803,8 @@
       "createdAt": "2026-09-11T18:47:17.795Z",
       "status": "completed",
       "doctorNotes": "Consultation completed. Rx provided.",
-      "completedAt": "2026-09-11T18:47:22.319Z"
+      "completedAt": "2026-09-11T18:47:22.319Z",
+      "consultationStatus": "completed"
     },
     {
       "token": "101",
@@ -833,7 +840,8 @@
         "familyHistory": "Father had hypertension."
       },
       "doctorNotes": "",
-      "status": "waiting"
+      "status": "waiting",
+      "consultationStatus": "incomplete"
     },
     {
       "token": "102",
@@ -870,7 +878,8 @@
         "familyHistory": "Mother had coronary artery disease."
       },
       "doctorNotes": "",
-      "status": "waiting"
+      "status": "waiting",
+      "consultationStatus": "incomplete"
     },
     {
       "token": "103",
@@ -895,7 +904,8 @@
         "familyHistory": "Nil"
       },
       "doctorNotes": "",
-      "status": "waiting"
+      "status": "waiting",
+      "consultationStatus": "incomplete"
     }
   ]
 }

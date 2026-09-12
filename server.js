@@ -39,7 +39,16 @@ const writeDB = (data) => {
 // 1. Get all patients in queue
 app.get("/api/queue", (req, res) => {
   const db = readDB();
-  res.json({ success: true, queue: db.patients });
+  const normalizedPatients = (db.patients || []).map((p) => {
+    const isCompleted = p.consultationStatus === "completed" || p.status === "completed";
+    return {
+      ...p,
+      token: String(p.token),
+      consultationStatus: isCompleted ? "completed" : (p.consultationStatus || "incomplete"),
+      status: isCompleted ? "completed" : (p.status || "waiting")
+    };
+  });
+  res.json({ success: true, queue: normalizedPatients });
 });
 
 // 2. Submit new intake from Patient Kiosk
@@ -51,16 +60,25 @@ app.post("/api/intake", (req, res) => {
 
   const db = readDB();
   // Ensure unique token or update existing
-  const existingIdx = db.patients.findIndex((p) => p.token === newPatient.token);
+  const existingIdx = db.patients.findIndex((p) => String(p.token) === String(newPatient.token));
 
   if (existingIdx >= 0) {
-    db.patients[existingIdx] = { ...db.patients[existingIdx], ...newPatient, updatedAt: new Date().toISOString() };
+    db.patients[existingIdx] = {
+      ...db.patients[existingIdx],
+      ...newPatient,
+      token: String(newPatient.token),
+      consultationStatus: newPatient.consultationStatus || db.patients[existingIdx].consultationStatus || "incomplete",
+      status: newPatient.status || db.patients[existingIdx].status || "waiting",
+      updatedAt: new Date().toISOString()
+    };
   } else {
     // Add to the top of the queue
     db.patients.unshift({
       ...newPatient,
+      token: String(newPatient.token),
       createdAt: new Date().toISOString(),
-      status: "waiting"
+      consultationStatus: newPatient.consultationStatus || "incomplete",
+      status: newPatient.status || "waiting"
     });
   }
 
@@ -72,22 +90,25 @@ app.post("/api/intake", (req, res) => {
 // 3. Complete doctor consultation & save Rx notes
 app.put("/api/patient/:token/complete", (req, res) => {
   const { token } = req.params;
-  const { doctorNotes } = req.body;
+  const { doctorNotes, consultationStatus, status } = req.body;
 
   const db = readDB();
-  const patient = db.patients.find((p) => p.token === token);
+  const patient = db.patients.find((p) => String(p.token) === String(token));
 
   if (!patient) {
     return res.status(404).json({ success: false, message: "Patient not found" });
   }
 
-  patient.status = "completed";
-  patient.consultationStatus = "completed";
-  patient.doctorNotes = doctorNotes || "Consultation completed. Advice given.";
+  const newStatus = consultationStatus || status || "completed";
+  patient.status = newStatus;
+  patient.consultationStatus = newStatus;
+  if (doctorNotes) {
+    patient.doctorNotes = doctorNotes;
+  }
   patient.completedAt = new Date().toISOString();
 
   writeDB(db);
-  console.log(`[Server] Consultation completed for Token #${token}`);
+  console.log(`[Server] Consultation status set to '${newStatus}' for Token #${token}`);
   res.json({ success: true, patient });
 });
 

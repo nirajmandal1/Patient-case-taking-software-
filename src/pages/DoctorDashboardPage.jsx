@@ -38,6 +38,16 @@ import { generatePatientPDF } from "../utils/pdfGenerator";
 import { mockSampleDocuments } from "../data/mockData";
 import { jsPDF } from "jspdf";
 
+const isPatientCompleted = (p) => {
+  if (!p) return false;
+  return p.consultationStatus === "completed" || String(p.status).toLowerCase() === "completed";
+};
+
+const isTokenMatch = (t1, t2) => {
+  if (t1 === undefined || t1 === null || t2 === undefined || t2 === null) return false;
+  return String(t1).trim() === String(t2).trim();
+};
+
 export const DoctorDashboardPage = () => {
   const {
     activeQueue,
@@ -149,7 +159,7 @@ export const DoctorDashboardPage = () => {
       gender: editGender
     };
     setSelectedPatient(updated);
-    if (selectedPatient.token === patientData.token) {
+    if (isTokenMatch(selectedPatient?.token, patientData?.token)) {
       setPatientData(updated);
     }
     setIsEditingPatient(false);
@@ -187,32 +197,48 @@ export const DoctorDashboardPage = () => {
     }
   };
 
-  const handleToggleConsultationStatus = (token, e) => {
+  const handleToggleConsultationStatus = (token, e, explicitStatus = null) => {
     if (e && typeof e.stopPropagation === "function") {
       e.stopPropagation();
     }
     const currentQueue = activeQueue || [];
-    const target = currentQueue.find((p) => p.token === token) || selectedPatient;
-    const newStatus = target.consultationStatus === "completed" ? "incomplete" : "completed";
+    const target =
+      currentQueue.find((p) => isTokenMatch(p.token, token)) ||
+      (isTokenMatch(selectedPatient?.token, token) ? selectedPatient : null) ||
+      selectedPatient;
+    if (!target) return;
+
+    const currentCompleted = isPatientCompleted(target);
+    const newStatus =
+      explicitStatus !== null
+        ? explicitStatus
+        : currentCompleted
+        ? "incomplete"
+        : "completed";
     const notes = doctorNotes || target.doctorNotes || "Consultation completed. Rx provided.";
 
     const updatedPatient = {
       ...target,
       consultationStatus: newStatus,
+      status: newStatus,
       doctorNotes: notes
     };
 
-    if (selectedPatient.token === token) {
+    if (isTokenMatch(selectedPatient?.token, token)) {
       setSelectedPatient(updatedPatient);
-      if (patientData && patientData.token === token) {
-        setPatientData(updatedPatient);
-        localStorage.setItem("medikiosk_current_patient", JSON.stringify(updatedPatient));
-      }
+    }
+    if (patientData && isTokenMatch(patientData.token, token)) {
+      setPatientData(updatedPatient);
+      localStorage.setItem("medikiosk_current_patient", JSON.stringify(updatedPatient));
     }
 
     if (setActiveQueue) {
       setActiveQueue((prevQueue) => {
-        const next = prevQueue.map((p) => (p.token === token ? { ...p, consultationStatus: newStatus, doctorNotes: notes } : p));
+        const next = prevQueue.map((p) =>
+          isTokenMatch(p.token, token)
+            ? { ...p, consultationStatus: newStatus, status: newStatus, doctorNotes: notes }
+            : p
+        );
         localStorage.setItem("medikiosk_queue", JSON.stringify(next));
         return next;
       });
@@ -222,16 +248,20 @@ export const DoctorDashboardPage = () => {
       fetch(`/api/patient/${token}/complete`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ doctorNotes: notes, consultationStatus: newStatus })
-      });
+        body: JSON.stringify({ doctorNotes: notes, consultationStatus: newStatus, status: newStatus })
+      }).catch((err) => console.warn("Background API sync notice:", err));
     } catch (err) {
       console.warn("Server update notice:", err.message);
     }
   };
 
-  const handleCompleteConsultation = async () => {
+  const handleCompleteConsultation = (e) => {
+    if (e && typeof e.stopPropagation === "function") {
+      e.stopPropagation();
+    }
+    if (!selectedPatient) return;
     setConsultationStatus("completed");
-    handleToggleConsultationStatus(selectedPatient.token);
+    handleToggleConsultationStatus(selectedPatient.token, e, "completed");
   };
 
   const sidebarItems = [
@@ -554,7 +584,7 @@ export const DoctorDashboardPage = () => {
 
   // Dynamically include any completed patients from active queue
   const queueCompleted = (activeQueue || [])
-    .filter((p) => p.consultationStatus === "completed")
+    .filter((p) => isPatientCompleted(p))
     .map((p) => ({
       token: p.token,
       name: p.name,
@@ -662,7 +692,7 @@ export const DoctorDashboardPage = () => {
             <div className="grid grid-cols-4 gap-2.5 text-xs">
               <div className="bg-amber-50/80 border border-amber-200/80 p-2.5 rounded-2xl text-center min-w-[75px]">
                 <span className="text-xl font-black text-amber-700">
-                  {activeQueue.filter((p) => p.consultationStatus !== "completed").length}
+                  {activeQueue.filter((p) => !isPatientCompleted(p)).length}
                 </span>
                 <br />
                 <span className="text-slate-500 text-[10px] font-bold">Incomplete</span>
@@ -903,7 +933,7 @@ export const DoctorDashboardPage = () => {
                         }`}
                       >
                         <Clock size={11} className="text-amber-600" />
-                        Incomplete ({activeQueue.filter((p) => p.consultationStatus !== "completed").length})
+                        Incomplete ({activeQueue.filter((p) => !isPatientCompleted(p)).length})
                       </button>
                       <button
                         onClick={() => setQueueFilter("completed")}
@@ -912,7 +942,7 @@ export const DoctorDashboardPage = () => {
                         }`}
                       >
                         <CheckCircle2 size={11} className="text-emerald-600" />
-                        Completed ({activeQueue.filter((p) => p.consultationStatus === "completed").length})
+                        Completed ({activeQueue.filter((p) => isPatientCompleted(p)).length})
                       </button>
                     </div>
 
@@ -943,16 +973,16 @@ export const DoctorDashboardPage = () => {
                         .filter((pt) => {
                           const matchesSearch =
                             pt.name.toLowerCase().includes(searchQueueQuery.toLowerCase()) ||
-                            pt.token.toLowerCase().includes(searchQueueQuery.toLowerCase());
+                            String(pt.token).toLowerCase().includes(searchQueueQuery.toLowerCase());
                           if (!matchesSearch) return false;
-                          if (queueFilter === "incomplete") return pt.consultationStatus !== "completed";
-                          if (queueFilter === "completed") return pt.consultationStatus === "completed";
+                          if (queueFilter === "incomplete") return !isPatientCompleted(pt);
+                          if (queueFilter === "completed") return isPatientCompleted(pt);
                           return true;
                         })
                         .map((pt) => {
-                          const isSelected = selectedPatient.token === pt.token;
-                          const isLiveNew = pt.token === patientData.token;
-                          const isCompleted = pt.consultationStatus === "completed";
+                          const isSelected = isTokenMatch(selectedPatient?.token, pt.token);
+                          const isLiveNew = isTokenMatch(patientData?.token, pt.token);
+                          const isCompleted = isPatientCompleted(pt);
                           return (
                             <tr
                               key={pt.token}
@@ -1100,7 +1130,7 @@ export const DoctorDashboardPage = () => {
                           TOKEN #{selectedPatient.token}
                         </span>
                         <span className="text-[10px] text-slate-400">ABHA: {selectedPatient.abhaId}</span>
-                        {selectedPatient.consultationStatus === "completed" ? (
+                        {isPatientCompleted(selectedPatient) ? (
                           <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1">
                             <CheckCircle2 size={11} className="text-emerald-600" /> Completed
                           </span>
@@ -1150,7 +1180,7 @@ export const DoctorDashboardPage = () => {
                 </div>
 
                 {/* Consultation Status Banner */}
-                {selectedPatient.consultationStatus === "completed" ? (
+                {isPatientCompleted(selectedPatient) ? (
                   <div className="bg-emerald-50 border border-emerald-300 p-3 rounded-2xl flex items-center justify-between text-xs shadow-2xs">
                     <div className="flex items-center gap-2">
                       <CheckCircle2 size={20} className="text-emerald-600 shrink-0" />
@@ -1160,7 +1190,7 @@ export const DoctorDashboardPage = () => {
                       </div>
                     </div>
                     <button
-                      onClick={() => handleToggleConsultationStatus(selectedPatient.token)}
+                      onClick={() => handleToggleConsultationStatus(selectedPatient.token, null, "incomplete")}
                       className="bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-1 rounded-lg text-[10px] font-bold transition cursor-pointer"
                     >
                       Undo / Re-open
@@ -1176,7 +1206,7 @@ export const DoctorDashboardPage = () => {
                       </div>
                     </div>
                     <button
-                      onClick={() => handleToggleConsultationStatus(selectedPatient.token)}
+                      onClick={() => handleToggleConsultationStatus(selectedPatient.token, null, "completed")}
                       className="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1 shadow-xs"
                     >
                       <Check size={12} /> Mark Complete ✓
@@ -1306,9 +1336,9 @@ export const DoctorDashboardPage = () => {
                     >
                       <Edit size={14} /> Edit Summary
                     </button>
-                    {selectedPatient.consultationStatus === "completed" ? (
+                    {isPatientCompleted(selectedPatient) ? (
                       <button
-                        onClick={() => handleToggleConsultationStatus(selectedPatient.token)}
+                        onClick={() => handleToggleConsultationStatus(selectedPatient.token, null, "incomplete")}
                         className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow-md transition cursor-pointer"
                         title="Click to toggle back to incomplete if needed"
                       >
@@ -1391,7 +1421,7 @@ export const DoctorDashboardPage = () => {
                           <div className="flex items-center justify-end gap-1.5">
                             <button
                               onClick={() => {
-                                const pt = item.patientObj || activeQueue.find((p) => p.token === item.token) || {
+                                const pt = item.patientObj || activeQueue.find((p) => isTokenMatch(p.token, item.token)) || {
                                   token: item.token,
                                   name: item.name,
                                   age: item.age,
@@ -1725,7 +1755,7 @@ export const DoctorDashboardPage = () => {
             <div className="flex flex-wrap justify-end gap-2 pt-3 border-t">
               <button
                 onClick={() => {
-                  const pt = selectedHistoryModal.patientObj || activeQueue.find((p) => p.token === selectedHistoryModal.token) || {
+                  const pt = selectedHistoryModal.patientObj || activeQueue.find((p) => isTokenMatch(p.token, selectedHistoryModal.token)) || {
                     token: selectedHistoryModal.token,
                     name: selectedHistoryModal.name,
                     age: selectedHistoryModal.age,
