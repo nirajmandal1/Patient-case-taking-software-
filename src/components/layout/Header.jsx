@@ -48,7 +48,7 @@ export const Header = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-lg font-black tracking-tight text-slate-900 flex items-center gap-1">
-                MediKiosk
+                MedSync
                 <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded-md border border-blue-200/60">
                   AI 2.0
                 </span>

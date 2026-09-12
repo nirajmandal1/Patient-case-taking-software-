@@ -36,7 +36,7 @@ export const LandingPage = () => {
           </h1>
 
           <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
-            MediKiosk collects patient history, digitizes medical documents, and prepares a structured clinical summary before the doctor consultation.
+            MedSync collects patient history, digitizes medical documents, and prepares a structured clinical summary before the doctor consultation.
           </p>
 
           <div className="flex flex-wrap justify-center items-center gap-4 pt-2">
@@ -90,7 +90,7 @@ export const LandingPage = () => {
               <span className="w-3 h-3 rounded-full bg-red-500"></span>
               <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
               <span className="w-3 h-3 rounded-full bg-green-500"></span>
-              <span className="text-xs text-slate-400 font-mono ml-2">MediKiosk OPD Intake Unit #03</span>
+              <span className="text-xs text-slate-400 font-mono ml-2">MedSync OPD Intake Unit #03</span>
             </div>
             <span className="text-xs bg-blue-900 text-blue-300 font-bold px-3 py-1 rounded-full border border-blue-700">
               LIVE KIOSK PREVIEW
@@ -195,9 +195,9 @@ export const LandingPage = () => {
       <section className="bg-slate-900 text-white rounded-3xl p-8 md:p-12 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-blue-400 font-bold text-xs uppercase tracking-wider">Our Solution</span>
-          <h2 className="text-3xl font-extrabold">Meet MediKiosk</h2>
+          <h2 className="text-3xl font-extrabold">Meet MedSync</h2>
           <p className="text-slate-300 text-sm">
-            “MediKiosk is an AI-assisted clinical intake platform that collects structured patient history before consultation and prepares a physician-ready summary.”
+            “MedSync is an AI-assisted clinical intake platform that collects structured patient history before consultation and prepares a physician-ready summary.”
           </p>
         </div>
 

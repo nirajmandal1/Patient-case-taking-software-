@@ -104,7 +104,7 @@ export const LoginPage = () => {
       <div className="text-center space-y-2">
         <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-900 border border-blue-200 px-4 py-1.5 rounded-full text-xs font-black">
           <ShieldCheck size={14} className="text-blue-600" />
-          <span>MediKiosk Secure Role-Based Access Control (RBAC)</span>
+          <span>MedSync Secure Role-Based Access Control (RBAC)</span>
         </div>
         <h1 className="text-3xl font-black text-slate-900 tracking-tight">
           Select Your Login Portal

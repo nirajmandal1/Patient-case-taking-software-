@@ -654,7 +654,7 @@ export const DoctorDashboardPage = () => {
               <Stethoscope size={20} />
             </div>
             <div>
-              <span className="font-black text-base text-slate-900 block leading-tight">MediKiosk</span>
+              <span className="font-black text-base text-slate-900 block leading-tight">MedSync</span>
               <span className="text-[10px] text-blue-600 font-extrabold uppercase tracking-widest">Physician Desk</span>
             </div>
           </div>
@@ -773,7 +773,7 @@ export const DoctorDashboardPage = () => {
                     <span className="text-3xl font-black text-slate-900">42</span>
                     <span className="text-xs text-emerald-600 font-bold">↑ +14% vs yesterday</span>
                   </div>
-                  <p className="text-[11px] text-slate-400">36 through MediKiosk, 6 manual</p>
+                  <p className="text-[11px] text-slate-400">36 through MedSync, 6 manual</p>
                 </div>
 
                 <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-2xs space-y-2">
@@ -1362,7 +1362,7 @@ export const DoctorDashboardPage = () => {
                           }`}
                         >
                           <span className="text-[10px] font-bold block mb-0.5 text-slate-400">
-                            {msg.sender === "patient" ? "👤 Patient" : "🤖 MediKiosk AI"} • {msg.time}
+                            {msg.sender === "patient" ? "👤 Patient" : "🤖 MedSync AI"} • {msg.time}
                           </span>
                           <p className="whitespace-pre-line font-medium">{msg.text}</p>
                         </div>

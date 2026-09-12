@@ -205,7 +205,7 @@ export const OCRResultsPage = () => {
             Automated OCR Extraction Verification (ABDM Standard)
           </strong>
           <span>
-            Clinical entities below were extracted using MediKiosk OCR. The physician will review both original document and structured findings before final prescription.
+            Clinical entities below were extracted using MedSync OCR. The physician will review both original document and structured findings before final prescription.
           </span>
         </div>
       </div>
@@ -356,7 +356,7 @@ export const OCRResultsPage = () => {
               {/* Stamp & Footer */}
               <div className="flex justify-between items-end pt-3 border-t border-slate-200 text-[10px] text-slate-400">
                 <div>
-                  <span>Digitized via MediKiosk OCR Engine</span>
+                  <span>Digitized via MedSync OCR Engine</span>
                   <span className="block text-[9px] text-slate-400">Verification Status: Verified ✓</span>
                 </div>
                 <div className="border-2 border-dashed border-blue-300 bg-blue-50/50 p-2 rounded-xl text-center min-w-[120px]">

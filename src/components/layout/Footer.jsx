@@ -9,7 +9,7 @@ export const Footer = () => {
           <div className="bg-white text-blue-900 p-1.5 rounded-lg">
             <Stethoscope size={16} />
           </div>
-          <span className="font-extrabold text-sm">MediKiosk</span>
+          <span className="font-extrabold text-sm">MedSync</span>
           <span className="text-blue-300 text-xs">|</span>
           <span className="text-blue-200 text-xs">AI-Powered Patient Case-Taking Software</span>
         </div>

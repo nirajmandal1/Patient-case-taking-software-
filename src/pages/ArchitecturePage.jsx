@@ -8,7 +8,7 @@ export const ArchitecturePage = () => {
         <span className="bg-blue-100 text-blue-800 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
           System Overview
         </span>
-        <h1 className="text-3xl font-extrabold text-slate-900">How MediKiosk Works</h1>
+        <h1 className="text-3xl font-extrabold text-slate-900">How MedSync Works</h1>
         <p className="text-slate-600 text-sm">
           Technical Architecture & Flow from Patient Kiosk to Hospital EMR / ABDM Ecosystem.
         </p>

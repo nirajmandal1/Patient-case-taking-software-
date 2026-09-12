@@ -38,7 +38,7 @@ class ErrorBoundary extends React.Component {
               }}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-3 px-6 rounded-2xl shadow-md transition cursor-pointer text-xs"
             >
-              🔄 Refresh & Reload MediKiosk
+              🔄 Refresh & Reload MedSync
             </button>
           </div>
         </div>

@@ -1,6 +1,251 @@
 {
   "patients": [
     {
+      "token": "120",
+      "patientId": "P-8801",
+      "name": "Ram",
+      "age": 18,
+      "gender": "Male",
+      "abhaId": "91-1123-8822-7711",
+      "language": "Hindi",
+      "chiefComplaint": "पेट में तेज दर्द है",
+      "historyStatus": "Complete (AI Verified)",
+      "documentsCount": 3,
+      "priority": "Normal",
+      "triageReason": "Standard OPD Intake",
+      "intakeTime": "10:14 AM",
+      "duration": "4 mins",
+      "caseData": {
+        "hpi": "Patient reported: \"पेट में तेज दर्द है\". Duration/Onset: Last 2 days. Location/Characteristics: Left-sided radiation. AI clinical triage conducted in English.",
+        "pastHistory": "Essential Hypertension (Stage 1), No known diabetes",
+        "currentMeds": [
+          "Tab. Amlodipine 5mg OD",
+          "Tab. Paracetamol 650mg SOS",
+          "Tab. Amlodipine 5 mg",
+          "Tab. Telmisartan 40 mg",
+          "Tab. Paracetamol 650 mg",
+          "Tab. Sorbitrate 5 mg"
+        ],
+        "allergies": [
+          "NKDA (No Known Drug Allergies)"
+        ],
+        "familyHistory": "Father died of sudden cardiac arrest at age 54.",
+        "lifestyle": "Non-smoker, mild alcohol consumption occasionally.",
+        "reviewOfSystems": {
+          "cardiovascular": "Chest pain, palpitations (+)",
+          "respiratory": "Mild breathlessness on exertion (+)",
+          "gastrointestinal": "No nausea or vomiting (-)",
+          "neurological": "No dizziness, no syncope (-)"
+        },
+        "extractedReports": [
+          {
+            "id": "REP-01",
+            "date": "15 Jan 2026",
+            "type": "ECG Report",
+            "test": "Sinus Rhythm, Mild ST elevation in II, III, aVF",
+            "source": "District OPD OCR Scan",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-02",
+            "date": "02 Oct 2025",
+            "type": "Blood Investigation",
+            "test": "Hb: 14.2 g/dL, BP: 154/96 mmHg, HbA1c: 5.9%",
+            "source": "City Diagnostics",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-03",
+            "date": "10 Jun 2025",
+            "type": "Prescription",
+            "test": "Amlodipine 5mg + Telmisartan 40mg prescribed",
+            "source": "Government Hospital",
+            "status": "Verified"
+          }
+        ]
+      },
+      "conversation": [
+        {
+          "sender": "ai",
+          "text": "नमस्ते Ram जी! आज आपको क्या तकलीफ है? कृपया अपनी परेशानी बताइए।",
+          "time": "03:26 pm"
+        },
+        {
+          "sender": "patient",
+          "text": "पेट में तेज दर्द है",
+          "time": "03:26 pm"
+        },
+        {
+          "sender": "ai",
+          "text": "अरे Ram जी, पेट का दर्द बहुत तकलीफदेह हो सकता है, चिंता मत कीजिए, डॉक्टर साहब जल्द ही देखकर सही इलाज करेंगे। यह दर्द पेट के किस हिस्से में है - ऊपर, नीचे, या नाभि के आसपास?\n\n[यह दर्द पेट के किस हिस्से में हो रहा है?]",
+          "time": "03:26 pm",
+          "streaming": false
+        }
+      ],
+      "createdAt": "2026-09-12T09:58:40.056Z",
+      "status": "completed",
+      "doctorNotes": "Consultation completed. Rx provided.",
+      "completedAt": "2026-09-12T07:18:23.950Z",
+      "updatedAt": "2026-09-12T05:28:41.425Z",
+      "consultationStatus": "incomplete"
+    },
+    {
+      "token": "119",
+      "patientId": "P-8801",
+      "name": "Ram",
+      "age": 18,
+      "gender": "Male",
+      "abhaId": "91-1123-8822-7711",
+      "language": "Hindi",
+      "chiefComplaint": "Chest discomfort with restlessness",
+      "historyStatus": "Complete (AI Verified)",
+      "documentsCount": 3,
+      "priority": "Normal",
+      "triageReason": "Standard OPD Intake",
+      "intakeTime": "10:14 AM",
+      "duration": "4 mins",
+      "caseData": {
+        "hpi": "Patient reported: \"Chest discomfort with restlessness\". Duration/Onset: Last 2 days. Location/Characteristics: Left-sided radiation. AI clinical triage conducted in English.",
+        "pastHistory": "Essential Hypertension (Stage 1), No known diabetes",
+        "currentMeds": [
+          "Tab. Amlodipine 5mg OD",
+          "Tab. Paracetamol 650mg SOS",
+          "Tab. Amlodipine 5 mg",
+          "Tab. Telmisartan 40 mg",
+          "Tab. Paracetamol 650 mg",
+          "Tab. Sorbitrate 5 mg"
+        ],
+        "allergies": [
+          "NKDA (No Known Drug Allergies)"
+        ],
+        "familyHistory": "Father died of sudden cardiac arrest at age 54.",
+        "lifestyle": "Non-smoker, mild alcohol consumption occasionally.",
+        "reviewOfSystems": {
+          "cardiovascular": "Chest pain, palpitations (+)",
+          "respiratory": "Mild breathlessness on exertion (+)",
+          "gastrointestinal": "No nausea or vomiting (-)",
+          "neurological": "No dizziness, no syncope (-)"
+        },
+        "extractedReports": [
+          {
+            "id": "REP-01",
+            "date": "15 Jan 2026",
+            "type": "ECG Report",
+            "test": "Sinus Rhythm, Mild ST elevation in II, III, aVF",
+            "source": "District OPD OCR Scan",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-02",
+            "date": "02 Oct 2025",
+            "type": "Blood Investigation",
+            "test": "Hb: 14.2 g/dL, BP: 154/96 mmHg, HbA1c: 5.9%",
+            "source": "City Diagnostics",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-03",
+            "date": "10 Jun 2025",
+            "type": "Prescription",
+            "test": "Amlodipine 5mg + Telmisartan 40mg prescribed",
+            "source": "Government Hospital",
+            "status": "Verified"
+          }
+        ]
+      },
+      "conversation": [
+        {
+          "sender": "ai",
+          "text": "नमस्ते Ram जी! आज आपको क्या तकलीफ है? कृपया अपनी परेशानी बताइए।",
+          "time": "03:19 pm"
+        }
+      ],
+      "createdAt": "2026-09-12T09:49:52.456Z",
+      "status": "completed",
+      "doctorNotes": "Consultation completed. Rx provided.",
+      "completedAt": "2026-09-12T07:18:23.950Z",
+      "updatedAt": "2026-09-12T05:28:41.425Z",
+      "consultationStatus": "incomplete"
+    },
+    {
+      "token": "118",
+      "patientId": "P-8801",
+      "name": "Ram",
+      "age": 18,
+      "gender": "Male",
+      "abhaId": "91-1123-8822-7711",
+      "language": "Hindi",
+      "chiefComplaint": "Chest discomfort with restlessness",
+      "historyStatus": "Complete (AI Verified)",
+      "documentsCount": 3,
+      "priority": "Normal",
+      "triageReason": "Standard OPD Intake",
+      "intakeTime": "10:14 AM",
+      "duration": "4 mins",
+      "caseData": {
+        "hpi": "Patient reported: \"Chest discomfort with restlessness\". Duration/Onset: Last 2 days. Location/Characteristics: Left-sided radiation. AI clinical triage conducted in Hindi.",
+        "pastHistory": "Essential Hypertension (Stage 1), No known diabetes",
+        "currentMeds": [
+          "Tab. Amlodipine 5mg OD",
+          "Tab. Paracetamol 650mg SOS",
+          "Tab. Amlodipine 5 mg",
+          "Tab. Telmisartan 40 mg",
+          "Tab. Paracetamol 650 mg",
+          "Tab. Sorbitrate 5 mg"
+        ],
+        "allergies": [
+          "NKDA (No Known Drug Allergies)"
+        ],
+        "familyHistory": "Father died of sudden cardiac arrest at age 54.",
+        "lifestyle": "Non-smoker, mild alcohol consumption occasionally.",
+        "reviewOfSystems": {
+          "cardiovascular": "Chest pain, palpitations (+)",
+          "respiratory": "Mild breathlessness on exertion (+)",
+          "gastrointestinal": "No nausea or vomiting (-)",
+          "neurological": "No dizziness, no syncope (-)"
+        },
+        "extractedReports": [
+          {
+            "id": "REP-01",
+            "date": "15 Jan 2026",
+            "type": "ECG Report",
+            "test": "Sinus Rhythm, Mild ST elevation in II, III, aVF",
+            "source": "District OPD OCR Scan",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-02",
+            "date": "02 Oct 2025",
+            "type": "Blood Investigation",
+            "test": "Hb: 14.2 g/dL, BP: 154/96 mmHg, HbA1c: 5.9%",
+            "source": "City Diagnostics",
+            "status": "Verified"
+          },
+          {
+            "id": "REP-03",
+            "date": "10 Jun 2025",
+            "type": "Prescription",
+            "test": "Amlodipine 5mg + Telmisartan 40mg prescribed",
+            "source": "Government Hospital",
+            "status": "Verified"
+          }
+        ]
+      },
+      "conversation": [
+        {
+          "sender": "ai",
+          "text": "नमस्ते Ram जी! आज आपको क्या तकलीफ है? कृपया अपनी परेशानी बताइए।",
+          "time": "02:06 pm"
+        }
+      ],
+      "createdAt": "2026-09-12T08:51:45.747Z",
+      "status": "completed",
+      "doctorNotes": "Consultation completed. Rx provided.",
+      "completedAt": "2026-09-12T08:53:11.091Z",
+      "updatedAt": "2026-09-12T05:28:41.425Z",
+      "consultationStatus": "completed"
+    },
+    {
       "token": "113",
       "patientId": "P-8801",
       "name": "Ram",
@@ -138,11 +383,11 @@
         }
       ],
       "createdAt": "2026-09-12T07:16:50.760Z",
-      "status": "completed",
+      "status": "incomplete",
       "doctorNotes": "Consultation completed. Rx provided.",
-      "completedAt": "2026-09-12T08:37:17.233Z",
+      "completedAt": "2026-09-12T08:52:23.578Z",
       "updatedAt": "2026-09-12T05:28:41.425Z",
-      "consultationStatus": "completed"
+      "consultationStatus": "incomplete"
     },
     {
       "token": "112",

@@ -20,7 +20,7 @@ import { getAdaptiveClinicalResponse } from "../utils/clinicalDialogEngine";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
-const SYSTEM_PROMPT = `You are MediKiosk AI, an empathetic clinical history-taking assistant at an Indian hospital OPD kiosk.
+const SYSTEM_PROMPT = `You are MedSync AI, an empathetic clinical history-taking assistant at an Indian hospital OPD kiosk.
 The patient is speaking to you in Hindi, Hinglish, or English.
 
 CRITICAL INSTRUCTIONS:

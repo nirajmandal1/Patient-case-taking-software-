@@ -10,7 +10,7 @@ export const SecurityPage = () => {
         </span>
         <h1 className="text-3xl font-extrabold text-slate-900">Privacy & Security</h1>
         <p className="text-slate-600 text-sm max-w-xl mx-auto">
-          MediKiosk is designed around privacy, consent, and controlled access to sensitive health information.
+          MedSync is designed around privacy, consent, and controlled access to sensitive health information.
         </p>
       </div>
 

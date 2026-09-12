@@ -25,7 +25,7 @@ export const ConsentPage = () => {
         </span>
         <h1 className="text-3xl font-extrabold text-slate-900">Before We Begin / shuru karne se pehle</h1>
         <p className="text-slate-600 text-sm">
-          Please review how MediKiosk protects and uses your health information.
+          Please review how MedSync protects and uses your health information.
         </p>
       </div>
 

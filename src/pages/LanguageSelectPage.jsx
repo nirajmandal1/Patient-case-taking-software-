@@ -26,8 +26,8 @@ export const LanguageSelectPage = () => {
     setIsPlayingAudio(true);
 
     const speechText = language === "English"
-      ? "Welcome to MediKiosk. We will ask you questions about your health and medical records to prepare a summary for the doctor. Your data is protected under ABDM guidelines."
-      : "मेडीकियोस्क में आपका स्वागत है। हम आपके स्वास्थ्य और पुरानी रिपोर्ट से जुड़े सवाल पूछेंगे ताकि डॉक्टर के लिए आपका केस तैयार हो सके। आपकी जानकारी पूरी तरह सुरक्षित रहेगी।";
+      ? "Welcome to MedSync. We will ask you questions about your health and medical records to prepare a summary for the doctor. Your data is protected under ABDM guidelines."
+      : "मेडसिंक में आपका स्वागत है। हम आपके स्वास्थ्य और पुरानी रिपोर्ट से जुड़े सवाल पूछेंगे ताकि डॉक्टर के लिए आपका केस तैयार हो सके। आपकी जानकारी पूरी तरह सुरक्षित रहेगी।";
 
     const utterance = new SpeechSynthesisUtterance(speechText);
     utterance.lang = language === "English" ? "en-IN" : "hi-IN";

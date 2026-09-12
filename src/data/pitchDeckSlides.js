@@ -1,7 +1,7 @@
 export const pitchDeckSlides = [
   {
     id: 1,
-    title: "MediKiosk",
+    title: "MedSync",
     subtitle: "AI-Powered Patient Case-Taking Software",
     category: "Cover & Overview",
     content: {
@@ -35,11 +35,11 @@ export const pitchDeckSlides = [
   },
   {
     id: 3,
-    title: "Meet MediKiosk — The Solution",
+    title: "Meet MedSync — The Solution",
     subtitle: "AI-Assisted Clinical Intake Platform",
     category: "Solution Overview",
     content: {
-      summary: "MediKiosk collects structured patient history and digitizes past records in the waiting room, transforming raw patient inputs into concise physician summaries.",
+      summary: "MedSync collects structured patient history and digitizes past records in the waiting room, transforming raw patient inputs into concise physician summaries.",
       features: [
         { title: "🎙️ Multilingual Voice", desc: "Speak naturally in Hindi, Bengali, Marathi, Tamil, Telugu, English." },
         { title: "👆 Touchscreen UI", desc: "Large accessible buttons designed for elderly & low-literacy users." },
@@ -53,13 +53,13 @@ export const pitchDeckSlides = [
   {
     id: 4,
     title: "Step-by-Step Patient Journey",
-    subtitle: "How MediKiosk Operates in a Hospital Workflow",
+    subtitle: "How MedSync Operates in a Hospital Workflow",
     category: "Workflow",
     content: {
       steps: [
         { num: 1, title: "Identity", desc: "Enter ABHA ID or Register as New Patient" },
         { num: 2, title: "Consent", desc: "Simple low-literacy consent screen with audio read-aloud" },
-        { num: 3, title: "AI Interview", desc: "Voice or touch response to dynamic clinical prompts" },
+        { num: 3, title: "Medical Chatbot", desc: "Voice or touch response to dynamic clinical prompts" },
         { num: 4, title: "Report Scanning", desc: "Place past reports on kiosk camera / scanner" },
         { num: 5, title: "OCR Extraction", desc: "Medicines, lab results, and past diagnoses extracted" },
         { num: 6, title: "AI Summary", desc: "Structured HPI and timeline generated" },
@@ -69,11 +69,11 @@ export const pitchDeckSlides = [
   },
   {
     id: 5,
-    title: "Adaptive AI Health Interview",
+    title: "Adaptive Medical Chatbot",
     subtitle: "Dynamic Clinical Questioning Engine",
     category: "AI Technology",
     content: {
-      description: "Unlike static forms, MediKiosk uses an adaptive clinical graph model that narrows down symptoms dynamically based on clinical protocols.",
+      description: "Unlike static forms, MedSync uses an adaptive clinical graph model that narrows down symptoms dynamically based on clinical protocols.",
       exampleFlow: [
         "Chief Complaint: Seene mein dard (Chest Pain)",
         "Onset: When did it start? (2 hours ago)",

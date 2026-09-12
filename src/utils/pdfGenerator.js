@@ -1,4 +1,4 @@
-﻿import { jsPDF } from "jspdf";
+import { jsPDF } from "jspdf";
 import { cleanTextForPDF } from "./textCleaner";
 
 export const generatePatientPDF = (patientData, conversation = []) => {
@@ -20,7 +20,7 @@ export const generatePatientPDF = (patientData, conversation = []) => {
   doc.setFont("helvetica", "bold");
   doc.setFontSize(14);
   doc.setTextColor(255, 255, 255);
-  doc.text("MEDIKIOSK - CLINICAL OPD INTAKE SHEET", 14, 11);
+  doc.text("MEDSYNC - CLINICAL OPD INTAKE SHEET", 14, 11);
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(8);
@@ -231,7 +231,7 @@ export const generatePatientPDF = (patientData, conversation = []) => {
   doc.setFontSize(7);
   doc.setTextColor(...grayColor);
   doc.text(
-    "Generated via MediKiosk Clinical Intake System | Valid for OPD consultation only | Not a final diagnosis",
+    "Generated via MedSync Clinical Intake System | Valid for OPD consultation only | Not a final diagnosis",
     14,
     290
   );

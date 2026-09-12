@@ -340,7 +340,7 @@ export const DocumentScannerPage = () => {
       <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap justify-between items-center gap-3">
         <div className="flex items-center gap-3">
           <div className="bg-blue-600 text-white p-2 rounded-xl font-bold text-xs">
-            MediKiosk
+            MedSync
           </div>
           <div>
             <h1 className="text-base font-black text-slate-900">Medical Document OCR Scanner</h1>

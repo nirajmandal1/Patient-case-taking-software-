@@ -87,7 +87,7 @@ export const ClinicalSummaryPage = () => {
   const handleDownloadPDF = () => {
     try {
       const doc = generatePatientPDF(patientData, patientConversation);
-      doc.save(`MediKiosk_Intake_Token_${patientData.token || "105"}.pdf`);
+      doc.save(`MedSync_Intake_Token_${patientData.token || "105"}.pdf`);
     } catch (err) {
       console.error("PDF generation error:", err);
       window.print();
