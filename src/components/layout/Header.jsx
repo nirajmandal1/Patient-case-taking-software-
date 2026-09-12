@@ -168,12 +168,12 @@ export const Header = () => {
               onChange={(e) => setLanguage(e.target.value)}
               className="bg-transparent text-slate-800 font-bold focus:outline-none cursor-pointer text-xs"
             >
-              <option value="English">🇬🇧 English</option>
-              <option value="Hindi">🇮🇳 हिंदी (Hindi)</option>
-              <option value="Bengali">🇮🇳 বাংলা (Bengali)</option>
-              <option value="Marathi">🇮🇳 मराठी (Marathi)</option>
-              <option value="Tamil">🇮🇳 தமிழ் (Tamil)</option>
-              <option value="Telugu">🇮🇳 తెలుగు (Telugu)</option>
+              <option value="English">English</option>
+              <option value="Hindi">हिंदी (Hindi)</option>
+              <option value="Bengali">বাংলা (Bengali)</option>
+              <option value="Marathi">मराठी (Marathi)</option>
+              <option value="Tamil">தமிழ் (Tamil)</option>
+              <option value="Telugu">తెలుగు (Telugu)</option>
             </select>
           </div>
 

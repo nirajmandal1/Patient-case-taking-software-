@@ -8,12 +8,12 @@ export const LanguageSelectPage = () => {
   const [consentGiven, setConsentGiven] = useState(true);
 
   const languages = [
-    { code: "Hindi", native: "हिंदी", sub: "Hindi", flag: "🇮🇳" },
-    { code: "English", native: "English", sub: "English", flag: "🇬🇧" },
-    { code: "Bengali", native: "বাংলা", sub: "Bengali", flag: "🇮🇳" },
-    { code: "Marathi", native: "मराठी", sub: "Marathi", flag: "🇮🇳" },
-    { code: "Tamil", native: "தமிழ்", sub: "Tamil", flag: "🇮🇳" },
-    { code: "Telugu", native: "తెలుగు", sub: "Telugu", flag: "🇮🇳" }
+    { code: "Hindi", native: "हिंदी", sub: "Hindi", symbol: "अ" },
+    { code: "English", native: "English", sub: "English", symbol: "A" },
+    { code: "Bengali", native: "বাংলা", sub: "Bengali", symbol: "অ" },
+    { code: "Marathi", native: "मराठी", sub: "Marathi", symbol: "म" },
+    { code: "Tamil", native: "தமிழ்", sub: "Tamil", symbol: "அ" },
+    { code: "Telugu", native: "తెలుగు", sub: "Telugu", symbol: "అ" }
   ];
 
   const handleContinue = () => {
@@ -102,7 +102,13 @@ export const LanguageSelectPage = () => {
                     }`}
                   >
                     <div className="flex justify-between items-start">
-                      <span className="text-3xl drop-shadow-xs">{l.flag}</span>
+                      <span className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm transition ${
+                        isSelected
+                          ? "bg-blue-600 text-white shadow-xs"
+                          : "bg-blue-50 text-blue-800 group-hover:bg-blue-100 border border-blue-200/70"
+                      }`}>
+                        {l.symbol}
+                      </span>
                       {isSelected ? (
                         <span className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center">
                           <Check size={12} strokeWidth={3} />
