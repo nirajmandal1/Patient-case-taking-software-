@@ -53,6 +53,8 @@ export const DoctorDashboardPage = () => {
   const [doctorNotes, setDoctorNotes] = useState("");
   const [activePanelTab, setActivePanelTab] = useState("summary"); // "summary", "chat"
   const [consultationStatus, setConsultationStatus] = useState("waiting");
+  const [queueFilter, setQueueFilter] = useState("all"); // "all", "incomplete", "completed"
+  const [searchQueueQuery, setSearchQueueQuery] = useState("");
   const [searchHistoryQuery, setSearchHistoryQuery] = useState("");
   const [docFilter, setDocFilter] = useState("all");
   const [settingsSaved, setSettingsSaved] = useState(false);
@@ -185,43 +187,51 @@ export const DoctorDashboardPage = () => {
     }
   };
 
-  const handleCompleteConsultation = async () => {
-    setConsultationStatus("completed");
+  const handleToggleConsultationStatus = (token, e) => {
+    if (e && typeof e.stopPropagation === "function") {
+      e.stopPropagation();
+    }
+    const currentQueue = activeQueue || [];
+    const target = currentQueue.find((p) => p.token === token) || selectedPatient;
+    const newStatus = target.consultationStatus === "completed" ? "incomplete" : "completed";
+    const notes = doctorNotes || target.doctorNotes || "Consultation completed. Rx provided.";
 
     const updatedPatient = {
-      ...selectedPatient,
-      consultationStatus: "completed",
-      doctorNotes: doctorNotes || "Consultation completed. Rx provided."
+      ...target,
+      consultationStatus: newStatus,
+      doctorNotes: notes
     };
-    setSelectedPatient(updatedPatient);
+
+    if (selectedPatient.token === token) {
+      setSelectedPatient(updatedPatient);
+      if (patientData && patientData.token === token) {
+        setPatientData(updatedPatient);
+        localStorage.setItem("medikiosk_current_patient", JSON.stringify(updatedPatient));
+      }
+    }
 
     if (setActiveQueue) {
       setActiveQueue((prevQueue) => {
-        const updated = prevQueue.map((p) =>
-          p.token === selectedPatient.token
-            ? { ...p, consultationStatus: "completed", doctorNotes: doctorNotes || "Consultation completed. Rx provided." }
-            : p
-        );
-        localStorage.setItem("medikiosk_queue", JSON.stringify(updated));
-        return updated;
+        const next = prevQueue.map((p) => (p.token === token ? { ...p, consultationStatus: newStatus, doctorNotes: notes } : p));
+        localStorage.setItem("medikiosk_queue", JSON.stringify(next));
+        return next;
       });
-    }
-
-    if (patientData && patientData.token === selectedPatient.token) {
-      setPatientData(updatedPatient);
-      localStorage.setItem("medikiosk_current_patient", JSON.stringify(updatedPatient));
     }
 
     try {
-      await fetch(`/api/patient/${selectedPatient.token}/complete`, {
+      fetch(`/api/patient/${token}/complete`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ doctorNotes: doctorNotes || "Consultation completed. Rx provided." })
+        body: JSON.stringify({ doctorNotes: notes, consultationStatus: newStatus })
       });
-    } catch (e) {
-      console.warn("Server update notice:", e.message);
+    } catch (err) {
+      console.warn("Server update notice:", err.message);
     }
-    alert(`✅ Consultation for Patient Token #${selectedPatient.token} completed. Status updated to COMPLETED!`);
+  };
+
+  const handleCompleteConsultation = async () => {
+    setConsultationStatus("completed");
+    handleToggleConsultationStatus(selectedPatient.token);
   };
 
   const sidebarItems = [
@@ -233,8 +243,8 @@ export const DoctorDashboardPage = () => {
     { id: "settings", label: "Settings", icon: Settings, badge: null }
   ];
 
-  // Completed patients mock for History
-  const completedPatients = [
+  // Base Completed patients for History
+  const baseCompletedPatients = [
     {
       token: "098",
       name: "Harish Chandra",
@@ -267,11 +277,28 @@ export const DoctorDashboardPage = () => {
     }
   ];
 
-  const filteredHistory = completedPatients.filter(
+  // Dynamically include any completed patients from active queue
+  const queueCompleted = (activeQueue || [])
+    .filter((p) => p.consultationStatus === "completed")
+    .map((p) => ({
+      token: p.token,
+      name: p.name,
+      age: p.age,
+      gender: p.gender,
+      time: p.intakeTime || "Just Now",
+      diagnosis: p.chiefComplaint || "OPD Consultation",
+      rx: p.doctorNotes || "Consultation Completed",
+      status: "Completed",
+      patientObj: p
+    }));
+
+  const allCompletedPatients = [...queueCompleted, ...baseCompletedPatients];
+
+  const filteredHistory = allCompletedPatients.filter(
     (p) =>
       p.name.toLowerCase().includes(searchHistoryQuery.toLowerCase()) ||
-      p.token.includes(searchHistoryQuery) ||
-      p.diagnosis.toLowerCase().includes(searchHistoryQuery.toLowerCase())
+      p.token.toLowerCase().includes(searchHistoryQuery.toLowerCase()) ||
+      (p.diagnosis && p.diagnosis.toLowerCase().includes(searchHistoryQuery.toLowerCase()))
   );
 
   return (
@@ -578,16 +605,50 @@ export const DoctorDashboardPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
               {/* Left Column: Patient Queue Table */}
               <div className="lg:col-span-3 bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3">
-                <div className="flex justify-between items-center">
+                <div className="flex flex-wrap justify-between items-center gap-3">
                   <div>
                     <h3 className="font-extrabold text-sm text-slate-900">Live OPD Patient Queue</h3>
-                    <p className="text-[11px] text-slate-400">Select any patient to review their AI case sheet</p>
+                    <p className="text-[11px] text-slate-400">Select any patient or click status to mark complete</p>
                   </div>
-                  <input
-                    type="text"
-                    placeholder="Search token or name..."
-                    className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs w-44 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  />
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex items-center bg-slate-100 p-0.5 rounded-xl text-[11px] font-bold">
+                      <button
+                        onClick={() => setQueueFilter("all")}
+                        className={`px-2.5 py-1 rounded-lg transition cursor-pointer ${
+                          queueFilter === "all" ? "bg-white text-blue-700 shadow-2xs font-extrabold" : "text-slate-600 hover:text-slate-900"
+                        }`}
+                      >
+                        All ({activeQueue.length})
+                      </button>
+                      <button
+                        onClick={() => setQueueFilter("incomplete")}
+                        className={`px-2.5 py-1 rounded-lg transition cursor-pointer flex items-center gap-1 ${
+                          queueFilter === "incomplete" ? "bg-white text-amber-700 shadow-2xs font-extrabold" : "text-slate-600 hover:text-slate-900"
+                        }`}
+                      >
+                        <Clock size={11} className="text-amber-600" />
+                        Incomplete ({activeQueue.filter((p) => p.consultationStatus !== "completed").length})
+                      </button>
+                      <button
+                        onClick={() => setQueueFilter("completed")}
+                        className={`px-2.5 py-1 rounded-lg transition cursor-pointer flex items-center gap-1 ${
+                          queueFilter === "completed" ? "bg-white text-emerald-700 shadow-2xs font-extrabold" : "text-slate-600 hover:text-slate-900"
+                        }`}
+                      >
+                        <CheckCircle2 size={11} className="text-emerald-600" />
+                        Completed ({activeQueue.filter((p) => p.consultationStatus === "completed").length})
+                      </button>
+                    </div>
+
+                    <input
+                      type="text"
+                      value={searchQueueQuery}
+                      onChange={(e) => setSearchQueueQuery(e.target.value)}
+                      placeholder="Search token / name..."
+                      className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1 text-xs w-36 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    />
+                  </div>
                 </div>
 
                 <div className="overflow-x-auto">
@@ -603,77 +664,109 @@ export const DoctorDashboardPage = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {activeQueue.map((pt) => {
-                        const isSelected = selectedPatient.token === pt.token;
-                        const isLiveNew = pt.token === patientData.token;
-                        const isCompleted = pt.consultationStatus === "completed";
-                        return (
-                          <tr
-                            key={pt.token}
-                            onClick={() => {
-                              setSelectedPatient(pt);
-                              setPatientData(pt);
-                            }}
-                            className={`border-b border-slate-100 cursor-pointer transition ${
-                              isSelected
-                                ? "bg-blue-50/90 font-medium"
-                                : isLiveNew
-                                ? "bg-emerald-50/60 hover:bg-emerald-50"
-                                : "hover:bg-slate-50"
-                            }`}
-                          >
-                            <td className="py-3 font-mono font-bold text-slate-900 flex items-center gap-1.5">
-                              {isLiveNew && (
-                                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                              )}
-                              #{pt.token}
-                            </td>
-                            <td className="py-3">
-                              <span className="font-bold text-slate-800 block">{pt.name}</span>
-                              {isLiveNew && (
-                                <span className="text-[10px] text-emerald-700 font-extrabold">
-                                  Just Arrived from Kiosk
+                      {activeQueue
+                        .filter((pt) => {
+                          const matchesSearch =
+                            pt.name.toLowerCase().includes(searchQueueQuery.toLowerCase()) ||
+                            pt.token.toLowerCase().includes(searchQueueQuery.toLowerCase());
+                          if (!matchesSearch) return false;
+                          if (queueFilter === "incomplete") return pt.consultationStatus !== "completed";
+                          if (queueFilter === "completed") return pt.consultationStatus === "completed";
+                          return true;
+                        })
+                        .map((pt) => {
+                          const isSelected = selectedPatient.token === pt.token;
+                          const isLiveNew = pt.token === patientData.token;
+                          const isCompleted = pt.consultationStatus === "completed";
+                          return (
+                            <tr
+                              key={pt.token}
+                              onClick={() => {
+                                setSelectedPatient(pt);
+                                setPatientData(pt);
+                              }}
+                              className={`border-b border-slate-100 cursor-pointer transition ${
+                                isSelected
+                                  ? "bg-blue-50/90 font-medium border-l-4 border-l-blue-600"
+                                  : isCompleted
+                                  ? "bg-emerald-50/20 hover:bg-emerald-50/40 border-l-4 border-l-emerald-500"
+                                  : isLiveNew
+                                  ? "bg-emerald-50/60 hover:bg-emerald-50"
+                                  : "hover:bg-slate-50"
+                              }`}
+                            >
+                              <td className="py-3 font-mono font-bold text-slate-900 flex items-center gap-1.5 pl-2">
+                                {isCompleted ? (
+                                  <span className="w-2 h-2 rounded-full bg-emerald-500" title="Completed"></span>
+                                ) : isLiveNew ? (
+                                  <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                                ) : null}
+                                #{pt.token}
+                              </td>
+                              <td className="py-3">
+                                <span className="font-bold text-slate-800 flex items-center gap-1.5">
+                                  {pt.name}
+                                  {isCompleted && (
+                                    <span className="text-[10px] text-emerald-700 font-extrabold bg-emerald-100 border border-emerald-300 px-1.5 py-0.2 rounded inline-flex items-center gap-0.5">
+                                      <Check size={10} strokeWidth={3} /> Done
+                                    </span>
+                                  )}
                                 </span>
-                              )}
-                            </td>
-                            <td className="py-3 text-slate-600">
-                              {pt.age}Y / {pt.gender?.[0] || "M"}
-                            </td>
-                            <td className="py-3">
-                              {pt.priority === "High Priority" || pt.priority === "High" ? (
-                                <span className="bg-red-100 text-red-700 font-extrabold px-2 py-0.5 rounded-full text-[10px] inline-flex items-center gap-1">
-                                  <AlertTriangle size={10} /> High Priority
-                                </span>
-                              ) : (
-                                <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full text-[10px]">
-                                  Standard
-                                </span>
-                              )}
-                            </td>
-                            <td className="py-3">
-                              {isCompleted ? (
-                                <span className="text-emerald-800 font-extrabold bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-lg text-[10px] inline-flex items-center gap-1 shadow-2xs">
-                                  <CheckCircle2 size={11} className="text-emerald-600" /> Completed
-                                </span>
-                              ) : (
-                                <span className="text-amber-800 font-bold bg-amber-50 border border-amber-300 px-2.5 py-1 rounded-lg text-[10px] inline-flex items-center gap-1">
-                                  <Clock size={11} className="text-amber-600" /> Incomplete
-                                </span>
-                              )}
-                            </td>
-                            <td className="py-3 text-center">
-                              <button
-                                onClick={(e) => handleOpenPatientPDF(pt, e)}
-                                className="inline-flex items-center gap-1 bg-blue-50 hover:bg-blue-600 hover:text-white text-blue-700 border border-blue-200 px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer"
-                                title="View Patient Case Sheet PDF in browser"
-                              >
-                                <Eye size={12} />
-                                <span>View PDF ↗</span>
-                              </button>
-                            </td>
-                          </tr>
-                        );
-                      })}
+                                {isLiveNew && !isCompleted && (
+                                  <span className="text-[10px] text-emerald-700 font-extrabold">
+                                    Just Arrived from Kiosk
+                                  </span>
+                                )}
+                              </td>
+                              <td className="py-3 text-slate-600">
+                                {pt.age}Y / {pt.gender?.[0] || "M"}
+                              </td>
+                              <td className="py-3">
+                                {pt.priority === "High Priority" || pt.priority === "High" ? (
+                                  <span className="bg-red-100 text-red-700 font-extrabold px-2 py-0.5 rounded-full text-[10px] inline-flex items-center gap-1">
+                                    <AlertTriangle size={10} /> High Priority
+                                  </span>
+                                ) : (
+                                  <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full text-[10px]">
+                                    Standard
+                                  </span>
+                                )}
+                              </td>
+                              <td className="py-3">
+                                {isCompleted ? (
+                                  <button
+                                    onClick={(e) => handleToggleConsultationStatus(pt.token, e)}
+                                    className="text-emerald-800 font-black bg-emerald-100 hover:bg-emerald-200 border border-emerald-300 px-2.5 py-1 rounded-lg text-[10px] inline-flex items-center gap-1 shadow-2xs transition cursor-pointer"
+                                    title="Click to toggle back to incomplete"
+                                  >
+                                    <CheckCircle2 size={12} className="text-emerald-600" /> Completed ✓
+                                  </button>
+                                ) : (
+                                  <button
+                                    onClick={(e) => handleToggleConsultationStatus(pt.token, e)}
+                                    className="text-amber-800 font-bold bg-amber-50 hover:bg-emerald-600 hover:text-white border border-amber-300 hover:border-emerald-600 px-2.5 py-1 rounded-lg text-[10px] inline-flex items-center gap-1 transition cursor-pointer group shadow-2xs"
+                                    title="Click right here to mark consultation as complete"
+                                  >
+                                    <Clock size={11} className="text-amber-600 group-hover:hidden" />
+                                    <Check size={11} className="hidden group-hover:inline text-white" />
+                                    <span className="group-hover:hidden">⏳ Incomplete</span>
+                                    <span className="hidden group-hover:inline font-black">Mark Complete ✓</span>
+                                  </button>
+                                )}
+                              </td>
+                              <td className="py-3 text-center">
+                                <button
+                                  onClick={(e) => handleOpenPatientPDF(pt, e)}
+                                  className="inline-flex items-center gap-1 bg-blue-50 hover:bg-blue-600 hover:text-white text-blue-700 border border-blue-200 px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer"
+                                  title="View Patient Case Sheet PDF in browser"
+                                >
+                                  <Eye size={12} />
+                                  <span>View PDF ↗</span>
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 </div>
@@ -780,6 +873,41 @@ export const DoctorDashboardPage = () => {
                     </button>
                   </div>
                 </div>
+
+                {/* Consultation Status Banner */}
+                {selectedPatient.consultationStatus === "completed" ? (
+                  <div className="bg-emerald-50 border border-emerald-300 p-3 rounded-2xl flex items-center justify-between text-xs shadow-2xs">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 size={20} className="text-emerald-600 shrink-0" />
+                      <div>
+                        <span className="font-black text-emerald-950 block text-xs">CONSULTATION COMPLETED ✓</span>
+                        <span className="text-[10px] text-emerald-700">Patient case verified & marked complete</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleToggleConsultationStatus(selectedPatient.token)}
+                      className="bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-1 rounded-lg text-[10px] font-bold transition cursor-pointer"
+                    >
+                      Undo / Re-open
+                    </button>
+                  </div>
+                ) : (
+                  <div className="bg-amber-50 border border-amber-300 p-3 rounded-2xl flex items-center justify-between text-xs shadow-2xs">
+                    <div className="flex items-center gap-2">
+                      <Clock size={18} className="text-amber-600 shrink-0" />
+                      <div>
+                        <span className="font-extrabold text-amber-950 block text-xs">Consultation In Progress ⏳</span>
+                        <span className="text-[10px] text-amber-700">Mark as complete after reviewing case</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleToggleConsultationStatus(selectedPatient.token)}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-3 py-1.5 rounded-xl text-xs transition cursor-pointer flex items-center gap-1 shadow-xs"
+                    >
+                      <Check size={12} /> Mark Complete ✓
+                    </button>
+                  </div>
+                )}
 
                 {/* Priority Alert Banner */}
                 {(selectedPatient.priority === "High Priority" || selectedPatient.priority === "High") && (
@@ -905,8 +1033,9 @@ export const DoctorDashboardPage = () => {
                     </button>
                     {selectedPatient.consultationStatus === "completed" ? (
                       <button
-                        onClick={() => alert(`Consultation for Token #${selectedPatient.token} is already completed!`)}
+                        onClick={() => handleToggleConsultationStatus(selectedPatient.token)}
                         className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow-md transition cursor-pointer"
+                        title="Click to toggle back to incomplete if needed"
                       >
                         <CheckCircle2 size={14} /> Consultation Completed ✓
                       </button>
@@ -970,12 +1099,24 @@ export const DoctorDashboardPage = () => {
                         <td className="py-3 font-semibold text-blue-900">{item.diagnosis}</td>
                         <td className="py-3 text-slate-600 max-w-xs truncate">{item.rx}</td>
                         <td className="py-3 text-right">
-                          <button
-                            onClick={() => setSelectedHistoryModal(item)}
-                            className="bg-slate-100 hover:bg-blue-50 text-blue-700 font-bold px-3 py-1 rounded-lg transition cursor-pointer"
-                          >
-                            View Record
-                          </button>
+                          <div className="flex items-center justify-end gap-1.5">
+                            <button
+                              onClick={() => {
+                                const pt = item.patientObj || activeQueue.find((p) => p.token === item.token) || selectedPatient;
+                                handleOpenPatientPDF(pt);
+                              }}
+                              className="bg-blue-50 hover:bg-blue-600 hover:text-white text-blue-700 font-bold px-2.5 py-1 rounded-lg text-xs transition cursor-pointer flex items-center gap-1"
+                              title="View PDF"
+                            >
+                              <Eye size={12} /> PDF ↗
+                            </button>
+                            <button
+                              onClick={() => setSelectedHistoryModal(item)}
+                              className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-2.5 py-1 rounded-lg text-xs transition cursor-pointer"
+                            >
+                              Record
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
