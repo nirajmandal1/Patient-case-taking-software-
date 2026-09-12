@@ -307,7 +307,7 @@ export const LoginPage = () => {
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 px-6 rounded-2xl flex items-center justify-center gap-2 shadow-lg transition transform active:scale-95 text-sm cursor-pointer"
               >
-                <span>Generate OPD Token & Start AI Interview</span>
+                <span>Generate OPD Token & Start Medical Chatbot</span>
                 <ArrowRight size={18} />
               </button>
             </div>

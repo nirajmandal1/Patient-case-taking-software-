@@ -781,7 +781,7 @@ export const ClinicalSummaryPage = () => {
           onClick={() => setActiveTab("interview")}
           className="text-slate-600 hover:text-slate-900 font-bold text-xs flex items-center gap-1 cursor-pointer"
         >
-          ← Retake AI Interview
+          ← Retake Medical Chatbot
         </button>
 
         <button

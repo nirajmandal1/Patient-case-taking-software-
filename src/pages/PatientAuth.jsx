@@ -222,7 +222,7 @@ export const PatientAuth = () => {
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 px-8 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 transition transform active:scale-[0.98] text-sm cursor-pointer"
               >
-                <span>Save Profile & Start AI Health Interview</span>
+                <span>Save Profile & Start Medical Chatbot</span>
                 <ArrowRight size={18} />
               </button>
             </div>

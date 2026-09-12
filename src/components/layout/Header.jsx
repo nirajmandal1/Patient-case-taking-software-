@@ -106,7 +106,7 @@ export const Header = () => {
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                <MessageSquare size={14} /> AI Interview
+                <MessageSquare size={14} /> Medical Chatbot
               </button>
 
               <button

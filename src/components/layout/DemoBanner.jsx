@@ -6,7 +6,7 @@ export const DemoBanner = () => {
   const { isDemoMode, demoStep, nextDemoStep, stopDemoMode } = useDemo();
   if (!isDemoMode) return null;
 
-  const stepLabels = ["1. Kiosk Welcome","2. Language & Consent","3. Language & Consent","4. ABHA Identification","5. AI Health Interview","6. Red-Flag Triage","7. Document Scanner","8. OCR Results","9. AI Clinical Summary","10. Doctor Dashboard"];
+  const stepLabels = ["1. Kiosk Welcome","2. Language & Consent","3. Language & Consent","4. ABHA Identification","5. Medical Chatbot","6. Red-Flag Triage","7. Document Scanner","8. OCR Results","9. AI Clinical Summary","10. Doctor Dashboard"];
 
   return (
     <div className="bg-blue-900 text-white px-4 py-2.5 shadow-md flex flex-wrap justify-between items-center text-xs border-b border-blue-800 sticky top-[61px] z-40">

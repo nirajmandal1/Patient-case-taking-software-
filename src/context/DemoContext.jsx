@@ -200,7 +200,7 @@ export const DemoProvider = ({ children }) => {
       chiefComplaint: chiefComplaint,
       priority: isRedFlag ? "High Priority" : "Normal",
       triageReason: isRedFlag
-        ? "Acute Chest Pain / Radiation detected by AI Interview"
+        ? "Acute Chest Pain / Radiation detected by Medical Chatbot"
         : "Standard OPD Intake",
       historyStatus: "Complete (AI Verified)",
       consultationStatus: "incomplete",

@@ -238,7 +238,7 @@ export const AIInterviewPage = () => {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base font-black text-slate-900">AI Clinical History Intake</h2>
+                <h2 className="text-base font-black text-slate-900">Medical Chatbot (Clinical Intake)</h2>
                 <span className="bg-blue-50 text-blue-700 border border-blue-200 text-[10px] font-black px-2 py-0.5 rounded-full">
                   Gemini Active
                 </span>
